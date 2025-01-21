@@ -1,0 +1,9 @@
+.alumno{
+    width: 100%;
+    height: 88dvh;
+    padding: .5rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}

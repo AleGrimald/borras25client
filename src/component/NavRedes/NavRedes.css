@@ -1,0 +1,31 @@
+.contenedor_redes{
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.h2_redes{
+    font-size: 20px;
+}
+.ul_redes{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+.img_red{
+    width: 25px;
+    aspect-ratio: 1/1;
+
+    border-radius: 50%;
+    transition: all .6s;
+
+    &:hover{
+        box-shadow: 0 0 5px 2px #688a8b;
+        transform: scale(1.2);
+    }
+}
