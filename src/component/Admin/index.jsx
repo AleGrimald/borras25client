@@ -7,6 +7,7 @@ const Admin =(props)=>{
     const [btnAlumno, setBtnAlumno] = useState(false);
     const [btnRutina, setBtnRutina] = useState(false);
     const [btnEjercicio, setBtnEjercicio] = useState(false);
+    const [manejoListarAlumno, setManejoListarAlumno] = useState(false);
     const [manejoAgregarAlumno, setManejoAgregarAlumno] = useState(false);
 
     useEffect(() => {
@@ -24,8 +25,9 @@ const Admin =(props)=>{
         .catch(error => console.error('Error fetching data:', error));
     });
 
-    const manejoPanelCentral=()=>{
-
+    const reiniciarEstados=()=>{
+        setManejoAgregarAlumno(false);
+        setManejoListarAlumno(false);
     }
 
     return<section className='contenedor_admin'>
@@ -49,10 +51,10 @@ const Admin =(props)=>{
                     {
                         btnAlumno?
                             <ul className='lista_admin'>
-                                <li onClick={()=>{setManejoAgregarAlumno(!manejoAgregarAlumno)}} className='lista_admin_elemento'>Listar Alumnos</li>
-                                <li onClick={manejoPanelCentral} className='lista_admin_elemento'>Agregar Alumno</li>
-                                <li onClick={manejoPanelCentral} className='lista_admin_elemento'>Modificar Alumno</li>
-                                <li onClick={manejoPanelCentral} className='lista_admin_elemento'>Eliminar Alumno</li>
+                                <li onClick={()=>{setManejoListarAlumno(!manejoListarAlumno)}} className='lista_admin_elemento'>Listar Alumnos</li>
+                                <li onClick={()=>{setManejoAgregarAlumno(!manejoAgregarAlumno)}} className='lista_admin_elemento'>Agregar Alumno</li>
+                                <li onClick={reiniciarEstados} className='lista_admin_elemento'>Modificar Alumno</li>
+                                <li onClick={reiniciarEstados} className='lista_admin_elemento'>Eliminar Alumno</li>
                             </ul>
                         :<></>
                     }
@@ -90,7 +92,7 @@ const Admin =(props)=>{
 
             <article className='main_panel_central'>
                 {
-                    manejoAgregarAlumno?usuario.map((user, index) =>
+                    manejoListarAlumno?usuario.map((user, index) =>
                         <article className='tarjeta_alumno_central' key={index}>
                             <section className='section_alumno_datos_central'>
                                 <img className='alumno_img_central' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTL1u8S1Nl0_yHeJLr-XRUSwTP-y-iyXq4Jw&s" alt="persona" />
@@ -104,6 +106,120 @@ const Admin =(props)=>{
                                 <p className='cuenta_p_central'>Estado: {user.estado}</p>
                             </section>
                         </article>):<></>
+                }
+
+                {
+                    manejoAgregarAlumno?<form action="" className='form'>
+                        <h2 className='form_h2'>Formulario de Inscripcion</h2>
+                        <fieldset className='form_field'>
+                            <legend className='form_legend'>Datos Personales</legend>
+                            <div className='form_div'>
+                                <label htmlFor="">Apellido *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            <div className='form_div'>
+                                <label htmlFor="">Nombre *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            <div className='form_div'>
+                                <label htmlFor="">Dni *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            <div className='form_div'>
+                                <label htmlFor="">Edad *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            
+                            <div className='form_div'>
+                                <label htmlFor="">Telefono *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            <div className='form_div'>
+                                <label htmlFor="">Email *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+
+                            <fieldset className='form_field'>
+                                <legend className='form_legend'>Direccion</legend>
+                                <div className='form_div'>
+                                    <label htmlFor="">Pais *</label>
+                                    <input type="text" name="" id="" required/>
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Provincia *</label>
+                                    <input type="text" name="" id="" required/>
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Departamento</label>
+                                    <input type="text" name="" id="" />
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Localidad</label>
+                                    <input type="text" name="" id="" />
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Calle *</label>
+                                    <input type="text" name="" id="" required/>
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Numero *</label>
+                                    <input type="number" name="" id="" required/>
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Piso</label>
+                                    <input type="text" name="" id="" />
+                                </div>
+                                <div className='form_div'>
+                                    <label htmlFor="">Dpto</label>
+                                    <input type="text" name="" id="" />
+                                </div>
+                                
+                            </fieldset>
+                        </fieldset>
+
+                        <fieldset className='form_field'>
+                            <legend className='form_legend'>Datos de Usuario</legend>
+                            <div className='form_div'>
+                                <label htmlFor="">Usuario *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            <div className='form_div'>
+                                <label htmlFor="">Contraseña *</label>
+                                <input type="password" name="" id="" required/>
+                            </div>
+                            <div className='form_div'>
+                                <label htmlFor="">Confirmar Contraseña *</label>
+                                <input type="text" name="" id="" required/>
+                            </div>
+                            
+                            <div className='form_div'>
+                                <label htmlFor="">Plan de Entrenamiento *</label>
+                                <select name="" id="" required>
+                                    <option value="" disabled selected>Seleccione una opcion</option>
+                                    <option value="">Basico</option>
+                                    <option value="">Intermedio</option>
+                                    <option value="">Profecional</option>
+                                    <option value="">Nivel Asiatico</option>
+                                </select>
+                            </div>
+                            
+                        </fieldset>
+                        
+                        <fieldset className='form_field'>
+                            <legend className='form_legend'>Fecha de Inicio - Fin</legend>
+
+                            <div className='form_div'>
+                                <label htmlFor="">Fecha de Inicio *</label>
+                                <input type="date" name="" id="" required/>
+                            </div>
+
+                            <div className='form_div'>
+                                <label htmlFor="">Fecha de Fin *</label>
+                                <input type="date" name="" id="" required/>
+                            </div>
+                        </fieldset>
+
+                    </form>:<></>
                 }
             </article>
 
