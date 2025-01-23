@@ -303,6 +303,11 @@ const Admin =(props)=>{
                                 <input onChange={(e) => setFechaI(e.target.value)} type="date" name="fechaI" id="fechaI" required/>
                             </div>
                         </fieldset>
+
+                        <fieldset className='form_field'>
+                            <input className='form_btn_confirmar' type="submit" value="Confirmar" />
+                            <input className='form_btn_limpiar' type="reset" value="Limpiar" />
+                        </fieldset>
                     </form>:<></>
                 }
             </article>
