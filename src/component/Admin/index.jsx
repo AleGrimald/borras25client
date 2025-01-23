@@ -304,7 +304,7 @@ const Admin =(props)=>{
                             </div>
                         </fieldset>
 
-                        <fieldset className='form_field'>
+                        <fieldset className='form_field form_field_btn'>
                             <input className='form_btn_confirmar' type="submit" value="Confirmar" />
                             <input className='form_btn_limpiar' type="reset" value="Limpiar" />
                         </fieldset>
