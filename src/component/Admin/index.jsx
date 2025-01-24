@@ -70,13 +70,16 @@ const Admin =(props)=>{
                 case "Profesional": setOpcionPlan("3"); break;
             }
 
+            let idUsuario = usuario[usuario.length-1]+1;
+
             datos = {
+                id: idUsuario,
                 ape: apellido,
                 nom: nombre,
-                dni: dni,
                 ed: edad,
+                dni: dni,
+                mail: email,                
                 tel: telefono,
-                mail: email,
                 pais: pais,
                 prov: provincia,
                 dep: departamento,
@@ -87,9 +90,10 @@ const Admin =(props)=>{
                 dpto: dpto,
                 usu: usuarioInp,
                 pass: contraseña,
-                plan: opcionPlan,
                 fechaInicio: fechaI,
-                fechaFin: fechaF
+                fechaFin: fechaF,
+                estado: "Pagado",
+                plan: opcionPlan,
             }
             setDatosAlumno(datos);
 
