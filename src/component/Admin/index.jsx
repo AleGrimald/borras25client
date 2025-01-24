@@ -98,7 +98,7 @@ const Admin =(props)=>{
             setDatosAlumno(datos);
 
             try{
-                let response = await fetch('https://borras25server.vercel.app/agregar_usuario',{
+                const response = await fetch('https://borras25server.vercel.app/agregar_usuario',{
                     method: 'POST',
                     headers:{
                         'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ const Admin =(props)=>{
                 });
 
                 if(response.ok){
-                    response = await fetch('https://borras25server.vercel.app/agregar_alumno',{
+                    const response2 = await fetch('https://borras25server.vercel.app/agregar_alumno',{
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ const Admin =(props)=>{
                         body: JSON.stringify(datosAlumno)
                     });
                     
-                    if(response.ok){
+                    if(response2.ok){
                         console.log("¡Alumno agregado exitosamente!")
                     }else{
                         console.log("Error al enviar los datos.")
