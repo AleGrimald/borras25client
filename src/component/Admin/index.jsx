@@ -331,7 +331,7 @@ const Admin =(props)=>{
 
             <aside className='main_panel_alumno'>
                 {
-                    usuario.filter(user => user.estado === "impago").map((user, index) =>
+                    usuario.filter(user => user.estado === "Impago").map((user, index) =>
                         <article className='tarjeta_alumno' key={index}>
                             <section className='section_alumno_datos'>
                                 <img className='alumno_img' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTL1u8S1Nl0_yHeJLr-XRUSwTP-y-iyXq4Jw&s" alt="persona" />
