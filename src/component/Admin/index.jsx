@@ -97,6 +97,7 @@ const Admin =(props)=>{
             }
             setDatosAlumno(datos);
             console.log(datos);
+            
             try {
                 const response = await fetch('https://borras25server.vercel.app/agregar_usuario_cliente', {
                     method: 'POST',
