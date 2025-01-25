@@ -73,27 +73,27 @@ const Admin =(props)=>{
             let idUsuario = usuario[usuario.length-1]+1;
 
             datos = {
-                id: idUsuario,
+                id: parseInt(idUsuario),
                 ape: apellido,
                 nom: nombre,
-                ed: edad,
-                dni: dni,
+                ed: parseInt(edad),
+                dni: parseInt(dni),
                 mail: email,                
-                tel: telefono,
+                tel: parseInt(telefono),
                 pais: pais,
                 prov: provincia,
                 dep: departamento,
                 loc: localidad,
                 calle: calle,
-                num: numero,
-                piso: piso,
+                num: parseInt(numero),
+                piso: parseInt(piso),
                 dpto: dpto,
                 usu: usuarioInp,
                 pass: contraseña,
                 fechaInicio: fechaI,
                 fechaFin: fechaF,
                 estado: "Pagado",
-                plan: opcionPlan,
+                plan: parseInt(opcionPlan),
             }
             setDatosAlumno(datos);
             console.log(datos);
@@ -118,15 +118,15 @@ const Admin =(props)=>{
                     if(response2.ok){
                         console.log("¡Alumno agregado exitosamente!")
                     }else{
-                        console.log("Error al enviar los datos.")
+                        console.log("Error al enviar los datos. ")
                     }
                     
                 }else{
-                    console.log("Error al enviar los datos.")
+                    console.log("Error al enviar los datos. Alumno")
                 }
             }
             catch(error){
-                console.log(`Error al enviar los datos: ${error}`)
+                console.log(`Error al enviar los datos Usuario: ${error}`)
             }
         }
     }
