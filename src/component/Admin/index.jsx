@@ -70,7 +70,7 @@ const Admin =(props)=>{
                 case "Profesional": setOpcionPlan("3"); break;
             }
 
-            let idUsuario = usuario[usuario.length-1]+1;
+            let idUsuario = parseInt(usuario[usuario.length-1])+1;
 
             datos = {
                 id: parseInt(idUsuario),
