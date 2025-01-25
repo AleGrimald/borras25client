@@ -73,7 +73,7 @@ const Admin =(props)=>{
             let idUsuario = parseInt(usuario[usuario.length-1])+1;
 
             datos = {
-                id: parseInt(idUsuario),
+                id: idUsuario,
                 ape: apellido,
                 nom: nombre,
                 ed: parseInt(edad),
