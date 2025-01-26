@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 
-const FormulatioAlumno=(porps)=>{
-    const {dat, usuario}=porps;
+const FormulatioEditarA=(porps)=>{
+    const {dat, reiniciarMain}=porps;
 
+    const [idCliente, setIdCliente] = useState("");
     const [apellido, setApellido] = useState("");
     const [nombre, setNombre] = useState("");
     const [dni, setDni] = useState("");
@@ -24,20 +25,49 @@ const FormulatioAlumno=(porps)=>{
     const [opcionPlan, setOpcionPlan] = useState("0");
     const [fechaI, setFechaI] = useState("");
     const [fechaF, setFechaF] = useState("");
-    
-    useEffect(() => {
-        if (fechaI) {
-            const fechaInicio = new Date(fechaI);
-            const fechaFin = new Date(fechaInicio);
-            fechaFin.setDate(fechaFin.getDate() + 30);
-            setFechaF(fechaFin.toISOString().split('T')[0]); // Formatear la fecha a 'YYYY-MM-DD'
-        }
-    }, [fechaI]);
 
-    const manejoFormulario = async (e)=>{
+    useEffect(()=>{
+        if (dat && dat.length > 0)
+        {
+            console.log("useEffect del Editar")
+            setIdCliente(dat[0].id_cliente);
+            setApellido(dat[0].apellido);
+            setNombre(dat[0].nombreCliente);
+            setDni(dat[0].dni);
+            setEdad(dat[0].edad);
+            setTelefono(dat[0].telefono);
+            setEmail(dat[0].correo);
+            setPais(dat[0].pais);
+            setProvincia(dat[0].provincia);
+            setDepartamento(dat[0].departamento);
+            setLocalidad(dat[0].localidad);
+            setCalle(dat[0].calle);
+            setNumero(dat[0].numero);
+            setPiso(dat[0].piso);
+            setDpto(dat[0].dpto);
+            setUsuarioInp(dat[0].usuario);
+            setContraseña(dat[0].passw);
+            setConfContraseña(dat[0].pasww);
+
+            const fechaFormateada = dat[0].fecha_inicio.split('T')[0];
+            setFechaI(fechaFormateada);
+
+            switch (dat[0].nombre) {
+                case "Basico": setOpcionPlan("1");break;
+                case "Competitivo": setOpcionPlan("2");break;
+                case "Profesional": setOpcionPlan("3");break;
+                default:setOpcionPlan("0"); break;
+            }
+        }else{
+            return
+        }
+
+    },[dat]);
+
+    const manejoFormularioEditar = async (e)=>{
         e.preventDefault();
         let datos={};
-
+        console.log("Manejo Form Editar se esta ejecutando")
         if(contraseña===confContraseña){
             switch(opcionPlan){
                 case "Basico": setOpcionPlan("1"); break;
@@ -45,10 +75,9 @@ const FormulatioAlumno=(porps)=>{
                 case "Profesional": setOpcionPlan("3"); break;
             }
 
-            let idUsuario = parseInt(usuario[usuario.length-1].id_cliente)+1;
-
+            console.log("Editando Datos")
             datos = {
-                id: idUsuario,
+                id: parseInt(idCliente),
                 ape: apellido,
                 nom: nombre,
                 ed: parseInt(edad),
@@ -70,10 +99,12 @@ const FormulatioAlumno=(porps)=>{
                 estado: "Pagado",
                 plan: parseInt(opcionPlan),
             }
+
+            console.log("Datos editados y cargados: ",datos);
             
             try {
-                const response = await fetch('https://borras25server.vercel.app/agregar_usuario_cliente', {
-                    method: 'POST',
+                const response = await fetch('https://borras25server.vercel.app/actualizar_usuario_cliente', {
+                    method: 'PUT',
                     headers: {
                     'Content-Type': 'application/json'
                 },
@@ -81,78 +112,78 @@ const FormulatioAlumno=(porps)=>{
                 });
 
                 if (response.ok) {
-                    console.log("¡Usuario y Cliente agregados exitosamente!");
+                    console.log("¡Usuario y Cliente editado exitosamente!");
                 } else {
-                    console.log("Error al enviar los datos.");
+                    console.log("Error al editar los datos.");
                 }
             }catch (error) {
-                console.log(`Error al enviar los datos: ${error}`);
+                console.log(`Error al editar los datos: ${error}`);
             }
         }
     }
 
     return <>
-        <form onSubmit={manejoFormulario} action="" className='form'>
-            <h2 className='form_h2'>Formulario de Inscripcion</h2>
+        <form onSubmit={manejoFormularioEditar} action="" className='form'>
+            <h2 className='form_h2'>Formulario de Actualizacio</h2>
             <fieldset className='form_field'>
                 <legend className='form_legend'>Datos Personales</legend>
                 <div className='form_div'>
                     <label htmlFor="apellido">Apellido *</label>
-                    <input onChange={(e) => setApellido(e.target.value)} type="text" name="apellido" id="apellido" required/>
+                    <input value={dat?apellido:""} onChange={(e) => setApellido(e.target.value)} type="text" name="apellido" id="apellido" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="nombre">Nombre *</label>
-                    <input onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" required/>
+                    <input value={dat?nombre:""} onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="dni">Dni *</label>
-                    <input onChange={(e) => setDni(e.target.value)} type="text" name="dni" id="dni" required/>
+                    <input value={dat?dni:""} onChange={(e) => setDni(e.target.value)} type="text" name="dni" id="dni" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="edad">Edad *</label>
-                    <input onChange={(e) => setEdad(e.target.value)} type="text" name="edad" id="edad" required/>
+                    <input value={dat?edad:""} onChange={(e) => setEdad(e.target.value)} type="text" name="edad" id="edad" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="telefono">Telefono *</label>
-                    <input onChange={(e) => setTelefono(e.target.value)} type="text" name="telefono" id="telefono" required/>
+                    <input value={dat?telefono:""} onChange={(e) => setTelefono(e.target.value)} type="text" name="telefono" id="telefono" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="email">Email *</label>
-                    <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" required/>
+                    <input value={dat?email:""} onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" required/>
                 </div>
                 <fieldset className='form_field'>
                     <legend className='form_legend'>Direccion</legend>
                     <div className='form_div'>
                         <label htmlFor="pais">Pais *</label>
-                        <input onChange={(e) => setPais(e.target.value)} type="text" name="pais" id="pais" required/>
+                        <input value={dat?pais:""} onChange={(e) => setPais(e.target.value)} type="text" name="pais" id="pais" required/>
                     </div>
                     <div className='form_div'>
                         <label htmlFor="provincia">Provincia *</label>
-                        <input onChange={(e) => setProvincia(e.target.value)} type="text" name="provincia" id="provincia" required/>
+                        <input value={dat?provincia:""} onChange={(e) => setProvincia(e.target.value)} type="text" name="provincia" id="provincia" required/>
                     </div>
                     <div className='form_div'>
                         <label htmlFor="departamento">Departamento</label>
-                        <input onChange={(e) => setDepartamento(e.target.value)} type="text" name="departamento" id="departamento" />
+                        <input value={dat?departamento:""} onChange={(e) => setDepartamento(e.target.value)} type="text" name="departamento" id="departamento" />
                     </div>
                     <div className='form_div'>
                         <label htmlFor="localidad">Localidad</label>
-                        <input onChange={(e) => setLocalidad(e.target.value)} type="text" name="localidad" id="localidad" />
+                        <input value={dat?localidad:""} onChange={(e) => setLocalidad(e.target.value)} type="text" name="localidad" id="localidad" />
                     </div>
                     <div className='form_div'>
                         <label htmlFor="calle">Calle *</label>
-                        <input onChange={(e) => setCalle(e.target.value)} type="text" name="calle" id="calle" required/>
+                        <input value={dat?calle:""} onChange={(e) => setCalle(e.target.value)} type="text" name="calle" id="calle" required/>
                     </div>
                     <div className='form_div'>
                         <label htmlFor="numero">Numero *</label>
-                        <input onChange={(e) => setNumero(e.target.value)} type="number" name="numero" id="numero+" required/>
+                        <input value={dat?numero:""} onChange={(e) => setNumero(e.target.value)} type="number" name="numero" id="numero+" required/>
                     </div>
                     <div className='form_div'>
                         <label htmlFor="piso">Piso</label>
-                        <input onChange={(e) => setPiso(e.target.value)} type="text" name="piso" id="piso" />
+                        <input value={dat?piso:""} onChange={(e) => setPiso(e.target.value)} type="text" name="piso" id="piso" />
                     </div>
                     <div className='form_div'>
                         <label htmlFor="dpto">Dpto</label>
-                        <input onChange={(e) => setDpto(e.target.value)} type="text" name="dpto" id="dpto" />
+                        <input value={dat?dpto:""} onChange={(e) => setDpto(e.target.value)} type="text" name="dpto" id="dpto" />
                     </div>
                 </fieldset>
             </fieldset>
@@ -161,15 +192,15 @@ const FormulatioAlumno=(porps)=>{
                 <legend className='form_legend'>Datos de Usuario</legend>
                 <div className='form_div'>
                     <label htmlFor="usuario">Usuario *</label>
-                    <input onChange={(e) => setUsuarioInp(e.target.value)} type="text" name="usuario" id="usuario" required/>
+                    <input value={dat?usuarioInp:""} onChange={(e) => setUsuarioInp(e.target.value)} type="text" name="usuario" id="usuario" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="contraseña">Contraseña *</label>
-                    <input onChange={(e) => setContraseña(e.target.value)} type="password" name="contraseña" id="contraseña" required/>
+                    <input value={dat?contraseña:""} onChange={(e) => setContraseña(e.target.value)} type="password" name="contraseña" id="contraseña" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="confContraseña">Confirmar Contraseña *</label>
-                    <input onChange={(e) => setConfContraseña(e.target.value)} type="password" name="confContraseña" id="confContraseña" required/>
+                    <input value={confContraseña||""} onChange={(e) => setConfContraseña(e.target.value)} type="password" name="confContraseña" id="confContraseña" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="planE">Plan de Entrenamiento *</label>
@@ -192,10 +223,10 @@ const FormulatioAlumno=(porps)=>{
 
             <fieldset className='form_field form_field_btn'>
                 <input className='form_btn_confirmar' type="submit" value="Confirmar" />
-                <input className='form_btn_limpiar' type="reset" value="Limpiar" />
+                <input onClick={reiniciarMain} className='form_btn_limpiar' type="reset" value="Cancelar" />
             </fieldset>
-        </form>:<></>
+        </form>
     </>
 }
 
-export default FormulatioAlumno;
+export default FormulatioEditarA;

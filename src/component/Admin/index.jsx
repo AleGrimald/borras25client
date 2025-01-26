@@ -2,12 +2,14 @@ import './Admin.css';
 import { useEffect, useState } from 'react';
 
 import FormulatioAlumno from '../FormularioAlumno';
+import FormulatioEditarA from '../FormularioEditarA';
 import ListaAlumnos from '../ListaAlumnos';
 import PanelIzqAdmin from '../PanelIzqAdmin'
 
 const Admin =(props)=>{
     const {manejoLogin} = props;
     const [usuario, setUsuarios] = useState([]);
+    const [alumnoImpago, setAlumnoImpago] = useState([]);
 
     const [datosEditar, setDatosEditar] = useState();
     const [formEditar, setFormEditar] = useState(false);
@@ -31,11 +33,15 @@ const Admin =(props)=>{
             }
             return response.json();
         })
-        .then(data => setUsuarios(data))
+        .then(data =>  setUsuarios(data))
         .catch(error => console.error('Error fetching data:', error));
 
         console.log("Lista de Alumnos Cargada con exito")
     },[]);
+
+    useEffect(()=>{
+        setAlumnoImpago(usuario.filter(user => user.estado === "Impago"));
+    },[usuario]);
 
     const reiniciarEstados=()=>{
         setManejoAgregarAlumno(false);
@@ -148,17 +154,17 @@ const Admin =(props)=>{
                 }
 
                 {
-                    manejoAgregarAlumno?<FormulatioAlumno/>:<></>                    
+                    manejoAgregarAlumno?<FormulatioAlumno usuario={usuario}/>:<></>                    
                 }
 
                 {
-                    formEditar?<FormulatioAlumno dat={datosEditar}/>:<></>
+                    formEditar?<FormulatioEditarA dat={datosEditar} reiniciarMain={reiniciarEstados}/>:<></>
                 }
             </article>
 
             <aside className='main_panel_alumno'>
                 {
-                    usuario.filter(user => user.estado === "Impago").map((user, index) =>
+                    alumnoImpago.map((user, index) =>
                         <article className='tarjeta_alumno' key={index}>
                             <section className='section_alumno_datos'>
                                 <img className='alumno_img' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTL1u8S1Nl0_yHeJLr-XRUSwTP-y-iyXq4Jw&s" alt="persona" />
