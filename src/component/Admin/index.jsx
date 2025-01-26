@@ -1,35 +1,20 @@
 import './Admin.css';
 import { useEffect, useState } from 'react';
 
+import FormulatioAlumno from '../FormularioAlumno';
+import ListaAlumnos from '../ListaAlumnos';
+import PanelIzqAdmin from '../PanelIzqAdmin'
+
 const Admin =(props)=>{
     const {manejoLogin} = props;
     const [usuario, setUsuarios] = useState([]);
-    const [datosAlumno, setDatosAlumno] = useState({});
+
+    const [datosEditar, setDatosEditar] = useState();
+    const [formEditar, setFormEditar] = useState(false);
 
     const [btnAlumno, setBtnAlumno] = useState(false);
     const [btnRutina, setBtnRutina] = useState(false);
     const [btnEjercicio, setBtnEjercicio] = useState(false);
-
-    const [apellido, setApellido] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [dni, setDni] = useState("");
-    const [edad, setEdad] = useState("");
-    const [telefono, setTelefono] = useState("");
-    const [email, setEmail] = useState("");
-    const [pais, setPais] = useState("");
-    const [provincia, setProvincia] = useState("");
-    const [departamento, setDepartamento] = useState("");
-    const [localidad, setLocalidad] = useState("");
-    const [calle, setCalle] = useState("");
-    const [numero, setNumero] = useState("");
-    const [piso, setPiso] = useState("");
-    const [dpto, setDpto] = useState("");
-    const [usuarioInp, setUsuarioInp] = useState("");
-    const [contraseña, setContraseña] = useState("");
-    const [confContraseña, setConfContraseña] = useState("");
-    const [opcionPlan, setOpcionPlan] = useState("0");
-    const [fechaI, setFechaI] = useState("");
-    const [fechaF, setFechaF] = useState("");
 
     const [manejoListarAlumno, setManejoListarAlumno] = useState(false);
     const [manejoAgregarAlumno, setManejoAgregarAlumno] = useState(false);
@@ -48,79 +33,14 @@ const Admin =(props)=>{
         })
         .then(data => setUsuarios(data))
         .catch(error => console.error('Error fetching data:', error));
-    });
 
-    useEffect(() => {
-        if (fechaI) {
-            const fechaInicio = new Date(fechaI);
-            const fechaFin = new Date(fechaInicio);
-            fechaFin.setDate(fechaFin.getDate() + 30);
-            setFechaF(fechaFin.toISOString().split('T')[0]); // Formatear la fecha a 'YYYY-MM-DD'
-        }
-    }, [fechaI]);
-
-    const manejoFormulario = async (e)=>{
-        e.preventDefault();
-        let datos={};
-
-        if(contraseña===confContraseña){
-            switch(opcionPlan){
-                case "Basico": setOpcionPlan("1"); break;
-                case "Competitivo": setOpcionPlan("2"); break;
-                case "Profesional": setOpcionPlan("3"); break;
-            }
-
-            let idUsuario = parseInt(usuario[usuario.length-1].id_cliente)+1;
-
-            datos = {
-                id: idUsuario,
-                ape: apellido,
-                nom: nombre,
-                ed: parseInt(edad),
-                dni: parseInt(dni),
-                mail: email,                
-                tel: parseInt(telefono),
-                pais: pais,
-                prov: provincia,
-                dep: departamento,
-                loc: localidad,
-                calle: calle,
-                num: parseInt(numero),
-                piso: parseInt(piso),
-                dpto: dpto,
-                usu: usuarioInp,
-                pass: contraseña,
-                fechaInicio: fechaI,
-                fechaFin: fechaF,
-                estado: "Pagado",
-                plan: parseInt(opcionPlan),
-            }
-            setDatosAlumno(datos);
-            console.log(datos);
-            
-            try {
-                const response = await fetch('https://borras25server.vercel.app/agregar_usuario_cliente', {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json'
-                },
-                    body: JSON.stringify(datosAlumno)
-                });
-
-                if (response.ok) {
-                    console.log("¡Usuario y Cliente agregados exitosamente!");
-                } else {
-                    console.log("Error al enviar los datos.");
-                }
-            }catch (error) {
-                console.log(`Error al enviar los datos: ${error}`);
-            }
-        }
-    }
+        console.log("Lista de Alumnos Cargada con exito")
+    },[]);
 
     const reiniciarEstados=()=>{
         setManejoAgregarAlumno(false);
         setManejoListarAlumno(false);
+        setFormEditar(false);
     }
 
     const manejoListadoA =()=>{
@@ -132,6 +52,66 @@ const Admin =(props)=>{
         setManejoAgregarAlumno(!manejoAgregarAlumno);
     }
 
+    const manejoListadoR = ()=>{
+        reiniciarEstados();
+        setManejoAgregarAlumno(!manejoAgregarAlumno);
+    }
+    const manejoAgregarR = ()=>{
+        reiniciarEstados();
+        setManejoAgregarAlumno(!manejoAgregarAlumno);
+    }
+
+    const manejoListadoE = ()=>{
+        reiniciarEstados();
+        setManejoAgregarAlumno(!manejoAgregarAlumno);
+    }
+    const manejoAgregarE = ()=>{
+        reiniciarEstados();
+        setManejoAgregarAlumno(!manejoAgregarAlumno);
+    }
+
+    const panelIzq = [
+        {
+            setBtn: setBtnAlumno,
+            valueBtn: btnAlumno,
+            btnNombre: "Alumnos",
+            condicion: btnAlumno,
+            funciones: [manejoListadoA, manejoAgregarA],
+            contenido: ["Listar Alumnos", "Agregar Alumno"],
+            clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
+        },
+        {
+            setBtn: setBtnRutina,
+            valueBtn: btnRutina,
+            btnNombre: "Rutinas",
+            condicion: btnRutina,
+            funciones: [manejoListadoR, manejoAgregarR],
+            contenido: ["Listar Rutina", "Agregar Rutina"],
+            clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
+        },
+        {
+            setBtn: setBtnEjercicio,
+            valueBtn: btnEjercicio,
+            btnNombre: "Ejercicio",
+            condicion: btnEjercicio,
+            funciones: [manejoListadoE, manejoAgregarE],
+            contenido: ["Listar Ejercicio", "Agregar Ejercicio"],
+            clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
+        },
+    ];
+
+    const editarAlumno=(ape, nom, tel)=>{
+        const coincidencias = usuario.filter(u => u.apellido===ape && u.nombreCliente===nom && u.telefono===tel);
+        if(coincidencias.length>0){
+            setDatosEditar(coincidencias);
+            reiniciarEstados();
+            setFormEditar(true);
+            console.log(coincidencias)
+        }else{
+            setFormEditar(false);
+        }
+    }
+    
     return<section className='contenedor_admin'>
         <nav className="nav_bar">
             <div className='nav_logo'>
@@ -148,171 +128,31 @@ const Admin =(props)=>{
         </nav>
         <main className='admin_main'>
             <aside className='main_panel_lateral'>
-                <button className='izq_boton' onClick={()=>{setBtnAlumno(!btnAlumno)}}>Alumnos</button>
-                <span className='opciones_lista'>
-                    {
-                        btnAlumno?
-                            <ul className='lista_admin'>
-                                <li onClick={manejoListadoA} className='lista_admin_elemento'>Listar Alumnos</li>
-                                <li onClick={manejoAgregarA} className='lista_admin_elemento'>Agregar Alumno</li>
-                            </ul>
-                        :<></>
-                    }
-                </span>
-
-                <button className='izq_boton' onClick={()=>{setBtnRutina(!btnRutina)}}>Rutinas</button>
-                <span className='opciones_lista'>
-                    {
-                        btnRutina?
-                            <ul className='lista_admin'>
-                                <li className='lista_admin_elemento'>Listar Rutina</li>
-                                <li className='lista_admin_elemento'>Crear Rutina</li>
-                            </ul>
-                        :<></>
-                    }
-                </span>
-
-                <button className='izq_boton' onClick={()=>{setBtnEjercicio(!btnEjercicio)}}>Ejercicio</button>
-                <span className='opciones_lista'>
-                    {
-                        btnEjercicio?
-                            <ul className='lista_admin'>
-                                <li className='lista_admin_elemento'>Listar Ejercicios</li>
-                                <li className='lista_admin_elemento'>Crear Ejercicio</li>
-                            </ul>
-                        :<></>
-                    }
-                </span>
-                
+                {
+                    panelIzq.map((p, index)=><PanelIzqAdmin 
+                        key={index} 
+                        setBtn={p.setBtn}
+                        valueBtn={p.valueBtn}
+                        btnNombre={p.btnNombre}
+                        condicion={p.condicion}
+                        funciones={p.funciones}
+                        contenido={p.contenido}
+                        clases={p.clases}
+                    />)
+                }
             </aside>
 
             <article className='main_panel_central'>
                 {
-                    manejoListarAlumno?usuario.map((user, index) =>
-                        <article className='tarjeta_alumno_central' key={index}>
-                            <section className='section_alumno_datos_central'>
-                                <img className='alumno_img_central' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTL1u8S1Nl0_yHeJLr-XRUSwTP-y-iyXq4Jw&s" alt="persona" />
-                            </section>
-                            <section className='section_alumno_cuenta_central'>
-                                <div className='alimno_datos_contacto_central'>
-                                    <h5 className='alumno_h4_central'>{user.apellido}, {user.nombreCliente}</h5>
-                                    <a href={'https://wa.me/'+user.telefono} className='alumno_h5_central'>{user.telefono}</a>
-                                </div>
-                                <p className='cuenta_p_central'>Entrenamiento: {user.nombre}</p>
-                                <p className='cuenta_p_central'>Estado: {user.estado}</p>
-                            </section>
-                            <section className='section_alumno_btn_central'>
-                                <button className='alumno_btn_editar'>Editar</button>
-                                <button className='alumno_btn_borrar'>Borrar</button>
-                            </section>
-                        </article>):<></>
+                    manejoListarAlumno?<ListaAlumnos usuarios={usuario} editar={editarAlumno}/>:<></>
                 }
 
                 {
-                    manejoAgregarAlumno?
-                    <form onSubmit={manejoFormulario} action="" className='form'>
-                        <h2 className='form_h2'>Formulario de Inscripcion</h2>
-                        <fieldset className='form_field'>
-                            <legend className='form_legend'>Datos Personales</legend>
-                            <div className='form_div'>
-                                <label htmlFor="apellido">Apellido *</label>
-                                <input onChange={(e) => setApellido(e.target.value)} type="text" name="apellido" id="apellido" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="nombre">Nombre *</label>
-                                <input onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="dni">Dni *</label>
-                                <input onChange={(e) => setDni(e.target.value)} type="text" name="dni" id="dni" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="edad">Edad *</label>
-                                <input onChange={(e) => setEdad(e.target.value)} type="text" name="edad" id="edad" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="telefono">Telefono *</label>
-                                <input onChange={(e) => setTelefono(e.target.value)} type="text" name="telefono" id="telefono" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="email">Email *</label>
-                                <input onChange={(e) => setEmail(e.target.value)} type="text" name="email" id="email" required/>
-                            </div>
-                            <fieldset className='form_field'>
-                                <legend className='form_legend'>Direccion</legend>
-                                <div className='form_div'>
-                                    <label htmlFor="pais">Pais *</label>
-                                    <input onChange={(e) => setPais(e.target.value)} type="text" name="pais" id="pais" required/>
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="provincia">Provincia *</label>
-                                    <input onChange={(e) => setProvincia(e.target.value)} type="text" name="provincia" id="provincia" required/>
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="departamento">Departamento</label>
-                                    <input onChange={(e) => setDepartamento(e.target.value)} type="text" name="departamento" id="departamento" />
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="localidad">Localidad</label>
-                                    <input onChange={(e) => setLocalidad(e.target.value)} type="text" name="localidad" id="localidad" />
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="calle">Calle *</label>
-                                    <input onChange={(e) => setCalle(e.target.value)} type="text" name="calle" id="calle" required/>
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="numero">Numero *</label>
-                                    <input onChange={(e) => setNumero(e.target.value)} type="number" name="numero" id="numero+" required/>
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="piso">Piso</label>
-                                    <input onChange={(e) => setPiso(e.target.value)} type="text" name="piso" id="piso" />
-                                </div>
-                                <div className='form_div'>
-                                    <label htmlFor="dpto">Dpto</label>
-                                    <input onChange={(e) => setDpto(e.target.value)} type="text" name="dpto" id="dpto" />
-                                </div>
-                            </fieldset>
-                        </fieldset>
+                    manejoAgregarAlumno?<FormulatioAlumno/>:<></>                    
+                }
 
-                        <fieldset className='form_field'>
-                            <legend className='form_legend'>Datos de Usuario</legend>
-                            <div className='form_div'>
-                                <label htmlFor="usuario">Usuario *</label>
-                                <input onChange={(e) => setUsuarioInp(e.target.value)} type="text" name="usuario" id="usuario" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="contraseña">Contraseña *</label>
-                                <input onChange={(e) => setContraseña(e.target.value)} type="password" name="contraseña" id="contraseña" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="confContraseña">Confirmar Contraseña *</label>
-                                <input onChange={(e) => setConfContraseña(e.target.value)} type="text" name="confContraseña" id="confContraseña" required/>
-                            </div>
-                            <div className='form_div'>
-                                <label htmlFor="planE">Plan de Entrenamiento *</label>
-                                <select value={opcionPlan} onChange={(e)=>{setOpcionPlan(e.target.value)}} name="planE" id="planE" required>
-                                    <option value="0">Selecciona una opcion</option>
-                                    <option value="1">Basico</option>
-                                    <option value="2">Competitivo</option>
-                                    <option value="3">Profesional</option>
-                                </select>
-                            </div>
-                        </fieldset>
-
-                        <fieldset className='form_field'>
-                            <legend className='form_legend'>Fecha de Inicio - Fin</legend>
-                            <div className='form_div'>
-                                <label htmlFor="fechaI">Fecha de Inicio *</label>
-                                <input onChange={(e) => setFechaI(e.target.value)} type="date" name="fechaI" id="fechaI" required/>
-                            </div>
-                        </fieldset>
-
-                        <fieldset className='form_field form_field_btn'>
-                            <input className='form_btn_confirmar' type="submit" value="Confirmar" />
-                            <input className='form_btn_limpiar' type="reset" value="Limpiar" />
-                        </fieldset>
-                    </form>:<></>
+                {
+                    formEditar?<FormulatioAlumno dat={datosEditar}/>:<></>
                 }
             </article>
 
