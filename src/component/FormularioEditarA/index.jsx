@@ -52,6 +52,11 @@ const FormulatioEditarA=(porps)=>{
             const fechaFormateada = dat[0].fecha_inicio.split('T')[0];
             setFechaI(fechaFormateada);
 
+            const fechaInicio = new Date(fechaI);
+            const fechaFin = new Date(fechaInicio);
+            fechaFin.setDate(fechaFin.getDate() + 30);
+            setFechaF(fechaFin.toISOString().split('T')[0]);
+
             switch (dat[0].nombre) {
                 case "Basico": setOpcionPlan("1");break;
                 case "Competitivo": setOpcionPlan("2");break;
@@ -62,7 +67,7 @@ const FormulatioEditarA=(porps)=>{
             return
         }
 
-    },[dat]);
+    },[dat, fechaI]);
 
     const manejoFormularioEditar = async (e)=>{
         e.preventDefault();
