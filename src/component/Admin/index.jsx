@@ -10,6 +10,7 @@ const Admin =(props)=>{
     const {manejoLogin} = props;
     const [usuario, setUsuarios] = useState([]);
     const [alumnoImpago, setAlumnoImpago] = useState([]);
+    const [actualizarUsuario, setActualizarUsuario] = useState(false);
 
     const [datosEditar, setDatosEditar] = useState();
     const [formEditar, setFormEditar] = useState(false);
@@ -37,7 +38,7 @@ const Admin =(props)=>{
         .catch(error => console.error('Error fetching data:', error));
 
         console.log("Lista de Alumnos Cargada con exito")
-    },[]);
+    },[actualizarUsuario]);
 
     useEffect(()=>{
         setAlumnoImpago(usuario.filter(user => user.estado === "Impago"));
@@ -150,15 +151,31 @@ const Admin =(props)=>{
 
             <article className='main_panel_central'>
                 {
-                    manejoListarAlumno?<ListaAlumnos usuarios={usuario} editar={editarAlumno}/>:<></>
+                    manejoListarAlumno?<ListaAlumnos 
+                        usuarios={usuario} 
+                        editar={editarAlumno}/>
+                    :<></>
                 }
 
                 {
-                    manejoAgregarAlumno?<FormulatioAlumno usuario={usuario}/>:<></>                    
+                    manejoAgregarAlumno?<FormulatioAlumno 
+                        usuario={usuario}
+                        actualizar={setActualizarUsuario} 
+                        actualizarValue={actualizarUsuario} 
+                        setForm={setManejoAgregarAlumno} 
+                        lista={setManejoListarAlumno}/>
+                    :<></>                    
                 }
 
                 {
-                    formEditar?<FormulatioEditarA dat={datosEditar} reiniciarMain={reiniciarEstados}/>:<></>
+                    formEditar?<FormulatioEditarA 
+                        actualizar={setActualizarUsuario} 
+                        actualizarValue={actualizarUsuario} 
+                        setForm={setFormEditar} 
+                        lista={setManejoListarAlumno} 
+                        dat={datosEditar} 
+                        reiniciarMain={reiniciarEstados}/>
+                    :<></>
                 }
             </article>
 

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 const FormulatioAlumno=(porps)=>{
-    const {dat, usuario}=porps;
+    const {dat, usuario, setForm, actualizar, actualizarValue, lista}=porps;
 
     const [apellido, setApellido] = useState("");
     const [nombre, setNombre] = useState("");
@@ -24,6 +24,8 @@ const FormulatioAlumno=(porps)=>{
     const [opcionPlan, setOpcionPlan] = useState("0");
     const [fechaI, setFechaI] = useState("");
     const [fechaF, setFechaF] = useState("");
+
+    const [modal, setModal] = useState(false);
     
     useEffect(() => {
         if (fechaI) {
@@ -89,9 +91,23 @@ const FormulatioAlumno=(porps)=>{
                 console.log(`Error al enviar los datos: ${error}`);
             }
         }
+        setModal(true);
+    }
+
+    const volverLista=()=>{
+        actualizar(!actualizarValue);
+        lista(true);
+        setForm(false);
     }
 
     return <>
+        {
+            modal?<div className="contenedor_modal">
+                <h4 className="modal_h4">¡Alumno editado exitosamente!</h4>
+                <h6 className="modal_h6">Presiona aceptar para volver a la Lista.</h6>
+                <button onClick={volverLista}>Aceptar</button>
+            </div>:<></>
+        }
         <form onSubmit={manejoFormulario} action="" className='form'>
             <h2 className='form_h2'>Formulario de Inscripcion</h2>
             <fieldset className='form_field'>

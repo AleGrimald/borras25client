@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
+import './FormularioEditarA.css';
 import { useState, useEffect } from "react";
 
+
 const FormulatioEditarA=(porps)=>{
-    const {dat, reiniciarMain}=porps;
+    const {dat, reiniciarMain, setForm, actualizar, actualizarValue, lista}=porps;
 
     const [idCliente, setIdCliente] = useState("");
     const [apellido, setApellido] = useState("");
@@ -25,6 +27,8 @@ const FormulatioEditarA=(porps)=>{
     const [opcionPlan, setOpcionPlan] = useState("0");
     const [fechaI, setFechaI] = useState("");
     const [fechaF, setFechaF] = useState("");
+
+    const [modal, setModal] = useState(false);
 
     useEffect(()=>{
         if (dat && dat.length > 0)
@@ -130,9 +134,23 @@ const FormulatioEditarA=(porps)=>{
                 console.log(`Error al editar los datos: ${error}`);
             }
         }
+        setModal(true);
+    }
+
+    const volverLista=()=>{
+        actualizar(!actualizarValue);
+        lista(true);
+        setForm(false);
     }
 
     return <>
+        {
+            modal?<div className="contenedor_modal">
+                <h4 className="modal_h4">¡Alumno editado exitosamente!</h4>
+                <h6 className="modal_h6">Presiona aceptar para volver a la Lista.</h6>
+                <button onClick={volverLista}>Aceptar</button>
+            </div>:<></>
+        }
         <form onSubmit={manejoFormularioEditar} action="" className='form'>
             <h2 className='form_h2'>Formulario de Actualizacio</h2>
             <fieldset className='form_field'>

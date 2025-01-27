@@ -1,0 +1,34 @@
+.contenedor_modal{
+
+    height: 200px;
+    padding: 1rem 2rem;
+    border: 2px solid rgb(107, 110, 112);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;  
+    align-items: center;  
+    background-color:rgb(135, 157, 170);
+
+    position: absolute;
+    top: 50%;
+    left: 50%-50;
+
+}
+.contenedor_modal>h4{
+    font-size: 24px;
+    color: white;
+}
+.contenedor_modal>h6{
+    font-size: 16px;
+    color: white;
+}
+.contenedor_modal>button{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(43, 43, 43);
+    border: none;
+
+    padding: 9px 30px;
+    border-radius: 7px;
+}
