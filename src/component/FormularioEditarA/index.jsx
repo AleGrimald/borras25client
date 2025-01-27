@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import ModalFormulario from '../ModalFormularios';
 import './FormularioEditarA.css';
 import { useState, useEffect } from "react";
 
@@ -145,11 +146,7 @@ const FormulatioEditarA=(porps)=>{
 
     return <>
         {
-            modal?<div className="contenedor_modal">
-                <h4 className="modal_h4">¡Alumno editado exitosamente!</h4>
-                <h6 className="modal_h6">Presiona aceptar para volver a la Lista.</h6>
-                <button onClick={volverLista}>Aceptar</button>
-            </div>:<></>
+            modal?<ModalFormulario volverLista={volverLista} nombre="editado"/>:<></>
         }
         <form onSubmit={manejoFormularioEditar} action="" className='form'>
             <h2 className='form_h2'>Formulario de Actualizacio</h2>
