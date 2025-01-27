@@ -210,7 +210,7 @@ const FormulatioEditarA=(porps)=>{
                 </div>
                 <div className='form_div'>
                     <label htmlFor="confContraseña">Confirmar Contraseña *</label>
-                    <input value={confContraseña||""} onChange={(e) => setConfContraseña(e.target.value)} type="password" name="confContraseña" id="confContraseña" required/>
+                    <input value={dat?confContraseña:""} onChange={(e) => setConfContraseña(e.target.value)} type="password" name="confContraseña" id="confContraseña" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="planE">Plan de Entrenamiento *</label>
