@@ -53,9 +53,14 @@ const FormulatioEditarA=(porps)=>{
             setFechaI(fechaFormateada);
 
             const fechaInicio = new Date(fechaI);
-            const fechaFin = new Date(fechaInicio);
-            fechaFin.setDate(fechaFin.getDate() + 30);
-            setFechaF(fechaFin.toISOString().split('T')[0]);
+            if (!isNaN(fechaInicio)) {
+                const fechaFin = new Date(fechaInicio);
+                fechaFin.setDate(fechaFin.getDate() + 30);
+                setFechaF(fechaFin.toISOString().split('T')[0]);
+            } else {
+                console.error('Invalid start date:', fechaI);
+            }
+
 
             switch (dat[0].nombre) {
                 case "Basico": setOpcionPlan("1");break;
