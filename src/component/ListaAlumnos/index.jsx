@@ -64,7 +64,7 @@ const ListaAlumnos =(props)=>{
                         </section>
                 </article>
             )
-            :usuarios.map((user, index) =>
+            :usuarios.sort((a,b)=> a.apellido.localeCompare(b.apellido)).map((user, index) =>
                 <article className='tarjeta_alumno_central' key={index}>
                     <section className='section_alumno_datos_central'>
                         <img className='alumno_img_central' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTL1u8S1Nl0_yHeJLr-XRUSwTP-y-iyXq4Jw&s" alt="persona" />
