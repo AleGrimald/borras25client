@@ -18,7 +18,7 @@ const Login = (props)=>{
             }
             return response.json();
         })
-        .then(data => {setUsuarios(data);console.log(data);})
+        .then(data => {setUsuarios(data)})
         .catch(error => console.error('Error fetching data:', error));
 
     }, []);

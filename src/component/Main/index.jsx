@@ -2,7 +2,6 @@ import './Main.css';
 import CarrucelLetras from '../CarrucelLetras';
 
 const Main = ()=>{
-    //const { } = props;
 
     return<>
         <section className='contenedor_datos'>

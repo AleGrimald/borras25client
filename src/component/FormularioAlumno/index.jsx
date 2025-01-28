@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ModalFormulario from "../ModalFormularios";
 
 const FormulatioAlumno=(porps)=>{
-    const {dat, usuario, setForm, actualizar, actualizarValue, lista}=porps;
+    const {usuario, setForm, actualizar, actualizarValue, lista}=porps;
 
     const [apellido, setApellido] = useState("");
     const [nombre, setNombre] = useState("");
@@ -34,7 +34,7 @@ const FormulatioAlumno=(porps)=>{
             const fechaInicio = new Date(fechaI);
             const fechaFin = new Date(fechaInicio);
             fechaFin.setDate(fechaFin.getDate() + 30);
-            setFechaF(fechaFin.toISOString().split('T')[0]); // Formatear la fecha a 'YYYY-MM-DD'
+            setFechaF(fechaFin.toISOString().split('T')[0]);
         }
     }, [fechaI]);
 
@@ -102,6 +102,25 @@ const FormulatioAlumno=(porps)=>{
         setForm(false);
     }
 
+    const validarLetra=(set,e)=>{
+        if(!(/[^A-Za-z\s]/.test(e.target.value))){
+            set(e.target.value);
+        }
+    }
+
+    const validarNumero=(set,e)=>{
+        if(!/[^0-9]/.test(e.target.value)){
+            set(e.target.value);
+        }
+    }
+
+    const validarEmail=(set,e)=>{
+        const emailRegex = /^[A-Za-z0-9._@-]+$/
+        if (emailRegex.test(e.target.value) || e.target.value==="") {
+            set(e.target.value);
+        }
+    }
+
     return <>
         {
             modal?<ModalFormulario volverLista={volverLista} nombre="agregado"/>:<></>
@@ -112,37 +131,37 @@ const FormulatioAlumno=(porps)=>{
                 <legend className='form_legend'>Datos Personales</legend>
                 <div className='form_div'>
                     <label htmlFor="apellido">Apellido *</label>
-                    <input onChange={(e) => setApellido(e.target.value)} type="text" name="apellido" id="apellido" required/>
+                    <input onChange={(e) => validarLetra(setApellido,e)} value={apellido} type="text" name="apellido" id="apellido" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="nombre">Nombre *</label>
-                    <input onChange={(e) => setNombre(e.target.value)} type="text" name="nombre" id="nombre" required/>
+                    <input onChange={(e) => validarLetra(setNombre,e)} value={nombre} type="text" name="nombre" id="nombre" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="dni">Dni *</label>
-                    <input onChange={(e) => setDni(e.target.value)} type="text" name="dni" id="dni" required/>
+                    <input onChange={(e) => validarNumero(setDni,e)} value={dni} maxLength={9} type="text" name="dni" id="dni" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="edad">Edad *</label>
-                    <input onChange={(e) => setEdad(e.target.value)} type="text" name="edad" id="edad" required/>
+                    <input onChange={(e) => validarNumero(setEdad,e)} value={edad} maxLength={2} type="text" name="edad" id="edad" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="telefono">Telefono *</label>
-                    <input onChange={(e) => setTelefono(e.target.value)} type="text" name="telefono" id="telefono" required/>
+                    <input onChange={(e) => validarNumero(setTelefono,e)} value={telefono} maxLength={16} type="text" name="telefono" id="telefono" required/>
                 </div>
                 <div className='form_div'>
                     <label htmlFor="email">Email *</label>
-                    <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" required/>
+                    <input onChange={(e) => validarEmail(setEmail, e)} value={email} type="email" name="email" id="email" required/>
                 </div>
                 <fieldset className='form_field'>
                     <legend className='form_legend'>Direccion</legend>
                     <div className='form_div'>
                         <label htmlFor="pais">Pais *</label>
-                        <input onChange={(e) => setPais(e.target.value)} type="text" name="pais" id="pais" required/>
+                        <input onChange={(e) => validarLetra(setPais, e)} value={pais} maxLength={19} type="text" name="pais" id="pais" required/>
                     </div>
                     <div className='form_div'>
                         <label htmlFor="provincia">Provincia *</label>
-                        <input onChange={(e) => setProvincia(e.target.value)} type="text" name="provincia" id="provincia" required/>
+                        <input onChange={(e) => validarLetra(setProvincia, e)} value={provincia} maxLength={40} type="text" name="provincia" id="provincia" required/>
                     </div>
                     <div className='form_div'>
                         <label htmlFor="departamento">Departamento</label>

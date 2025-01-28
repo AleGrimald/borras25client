@@ -26,7 +26,7 @@ const FormulatioEditarA=(porps)=>{
     const [contraseña, setContraseña] = useState("");
     const [confContraseña, setConfContraseña] = useState("");
     const [opcionPlan, setOpcionPlan] = useState("0");
-    const [fechaI, setFechaI] = useState("");
+    const [fechaI, setFechaI] = useState("1950-01-01");
     const [fechaF, setFechaF] = useState("");
 
     const [modal, setModal] = useState(false);
