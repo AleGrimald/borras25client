@@ -5,7 +5,7 @@
     flex-flow: column nowrap;
     justify-content: space-between;
     align-items: center;
-    
+    gap: 10px;
 }
 .h2_redes{
     font-size: 20px;
@@ -18,7 +18,7 @@
     gap: 50px;
 }
 .img_red{
-    width: 25px;
+    width: 35px;
     aspect-ratio: 1/1;
 
     border-radius: 50%;
@@ -28,4 +28,60 @@
         box-shadow: 0 0 5px 2px #688a8b;
         transform: scale(1.2);
     }
+}
+
+@media (max-width: 600px) {
+    .contenedor_redes{
+        width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+    .h2_redes{
+        font-size: 20px;
+    }
+    .ul_redes{
+        gap: 40px;
+    }
+    .img_red{
+        width: 54px;
+        transition: all .3s;
+        &:active{
+            box-shadow: 0 0 5px 2px #688a8b;
+            transform: scale(1.2);
+        }
+    }
+}
+
+/* Dispositivos medianos (tabletas en modo vertical, teléfonos móviles en modo horizontal) */
+@media (min-width: 601px) and (max-width: 992px) {
+    .contenedor_redes{
+        width: 50%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+    .h2_redes{
+        font-size: 20px;
+    }
+    .ul_redes{
+        gap: 40px;
+    }
+    .img_red{
+        width: 54px;
+        transition: all .3s;
+        &:active{
+            box-shadow: 0 0 5px 2px #688a8b;
+            transform: scale(1.2);
+        }
+    }
+}
+
+/* Dispositivos grandes (escritorios) */
+@media (min-width: 993px) {
+
 }
