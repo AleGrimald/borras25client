@@ -1,16 +1,48 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import "./ListaAlumnos.css";
+import ModalFormulario from "../ModalFormularios";
 
 const ListaAlumnos =(props)=>{
-    const {usuarios, editar} = props;
+    const {usuarios, editar, actualizar, actualizarValue} = props;
 
     const [buscar, setBuscar] = useState("");
     const [listaEncontrados, setListaEncontrados] = useState([]);
     const [manejoLista, setManejoLista] = useState(false);
 
+    const [modal, setModal] = useState(false);
+    const [idClient, setIdCliente]=useState();
+
     const manejoEditar =(user)=>{
         editar(user.apellido,user.nombreCliente,user.telefono);
+    }
+
+    const manejoEliminar=(user)=>{
+        setIdCliente(user.id_cliente);
+        setModal(true);
+    }
+
+    const volverLista= async()=>{
+        try {
+            const response = await fetch('https://borras25server.vercel.app/eliminar_usuario_cliente', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_cliente: idClient })
+            });
+        
+            if (response.ok) {
+                console.log("¡Usuario y Cliente eliminado exitosamente!");
+            } else {
+                console.log("Error al eliminar los datos.");
+            }
+        } catch (error) {
+            console.log(`Error al eliminar los datos: ${error}`);
+        }
+        
+        actualizar(!actualizarValue);
+        setModal(false);
     }
 
     const buscarAlumno=(e)=>{
@@ -43,6 +75,8 @@ const ListaAlumnos =(props)=>{
                 onKeyPress={buscarAlumno}
             />
         </div>
+
+        {modal?<ModalFormulario volverLista={volverLista} nombre="eliminado"/>:<></>}
         {
             manejoLista?
                 listaEncontrados.map((user, index) =>
@@ -60,7 +94,7 @@ const ListaAlumnos =(props)=>{
                         </section>
                         <section className='section_alumno_btn_central'>
                             <button onClick={()=>manejoEditar(user)} className='alumno_btn_editar'>Editar</button>
-                            <button className='alumno_btn_borrar'>Borrar</button>
+                            <button onClick={()=>manejoEliminar(user)} className='alumno_btn_borrar'>Borrar</button>
                         </section>
                 </article>
             )
@@ -79,7 +113,7 @@ const ListaAlumnos =(props)=>{
                     </section>
                     <section className='section_alumno_btn_central'>
                         <button onClick={()=>manejoEditar(user)} className='alumno_btn_editar'>Editar</button>
-                        <button className='alumno_btn_borrar'>Borrar</button>
+                        <button onClick={()=>manejoEliminar(user)} className='alumno_btn_borrar'>Borrar</button>
                     </section>
                 </article>
             )

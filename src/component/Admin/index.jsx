@@ -153,7 +153,9 @@ const Admin =(props)=>{
                 {
                     manejoListarAlumno?<ListaAlumnos 
                         usuarios={usuario} 
-                        editar={editarAlumno}/>
+                        editar={editarAlumno}
+                        actualizar={setActualizarUsuario} 
+                        actualizarValue={actualizarUsuario}/>
                     :<></>
                 }
 
