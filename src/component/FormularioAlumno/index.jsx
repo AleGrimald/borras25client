@@ -49,7 +49,8 @@ const FormulatioAlumno=(porps)=>{
                 case "Profesional": setOpcionPlan("3"); break;
             }
 
-            let idUsuario = parseInt(usuario[usuario.length-1].id_cliente)+1;
+            let idUsuario = Math.max(...usuario.map(u=> u.id_cliente)) +1;
+            console.log(idUsuario);
 
             datos = {
                 id: idUsuario,
@@ -74,13 +75,13 @@ const FormulatioAlumno=(porps)=>{
                 estado: "Pagado",
                 plan: parseInt(opcionPlan),
             }
-            
+
             try {
                 const response = await fetch('https://borras25server.vercel.app/agregar_usuario_cliente', {
                     method: 'POST',
                     headers: {
-                    'Content-Type': 'application/json'
-                },
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(datos)
                 });
 

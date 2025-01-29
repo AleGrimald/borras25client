@@ -52,7 +52,7 @@ const FormulatioEditarA=(porps)=>{
             setDpto(dat[0].dpto);
             setUsuarioInp(dat[0].usuario);
             setContraseña(dat[0].passw);
-            setConfContraseña(dat[0].pasww);
+            setConfContraseña(dat[0].passw);
 
             const fechaFormateada = dat[0].fecha_inicio.split('T')[0];
             setFechaI(fechaFormateada);
@@ -122,7 +122,7 @@ const FormulatioEditarA=(porps)=>{
                     method: 'PUT',
                     headers: {
                     'Content-Type': 'application/json'
-                },
+                    },
                     body: JSON.stringify(datos)
                 });
 
