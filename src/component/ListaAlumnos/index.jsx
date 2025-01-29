@@ -54,7 +54,6 @@ const ListaAlumnos =(props)=>{
             );
             setManejoLista(true);
             setListaEncontrados(encontrado);
-            console.log(encontrado);
         }
     }
 

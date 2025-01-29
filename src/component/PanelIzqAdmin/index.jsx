@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 
 
 const PanelIzqAdmin =(props)=>{
@@ -9,8 +10,10 @@ const PanelIzqAdmin =(props)=>{
             {
                 condicion?
                     <ul className={clases[2]}>
-                        <li onClick={funciones[0]} className={clases[3]}>{contenido[0]}</li>
-                        <li onClick={funciones[1]} className={clases[3]}>{contenido[1]}</li>
+                        {
+                            contenido.map((cont,index)=><li key={index} onClick={funciones[index]} className={clases[3]}>{cont}</li>)
+                        }
+                        
                     </ul>
                 :<></>
             }

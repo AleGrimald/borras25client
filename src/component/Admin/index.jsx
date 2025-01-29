@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './Admin.css';
 import { useEffect, useState } from 'react';
 
@@ -5,6 +6,7 @@ import FormulatioAlumno from '../FormularioAlumno';
 import FormulatioEditarA from '../FormularioEditarA';
 import ListaAlumnos from '../ListaAlumnos';
 import PanelIzqAdmin from '../PanelIzqAdmin'
+import FormulatioEjercicio from '../FormularioEjercicio';
 
 const Admin =(props)=>{
     const {manejoLogin} = props;
@@ -21,6 +23,7 @@ const Admin =(props)=>{
 
     const [manejoListarAlumno, setManejoListarAlumno] = useState(false);
     const [manejoAgregarAlumno, setManejoAgregarAlumno] = useState(false);
+    const [manejoAgregarEjercicio, setManejoAgregarEjercicio] = useState(false);
 
 
     useEffect(() => {
@@ -47,6 +50,7 @@ const Admin =(props)=>{
     const reiniciarEstados=()=>{
         setManejoAgregarAlumno(false);
         setManejoListarAlumno(false);
+        setManejoAgregarEjercicio(false);
         setFormEditar(false);
     }
 
@@ -67,6 +71,10 @@ const Admin =(props)=>{
         reiniciarEstados();
         setManejoAgregarAlumno(!manejoAgregarAlumno);
     }
+    const manejoAsignarR = ()=>{
+        reiniciarEstados();
+        setManejoAgregarAlumno(!manejoAgregarAlumno);
+    }
 
     const manejoListadoE = ()=>{
         reiniciarEstados();
@@ -74,7 +82,7 @@ const Admin =(props)=>{
     }
     const manejoAgregarE = ()=>{
         reiniciarEstados();
-        setManejoAgregarAlumno(!manejoAgregarAlumno);
+        setManejoAgregarEjercicio(!manejoAgregarEjercicio);
     }
 
     const panelIzq = [
@@ -92,8 +100,8 @@ const Admin =(props)=>{
             valueBtn: btnRutina,
             btnNombre: "Rutinas",
             condicion: btnRutina,
-            funciones: [manejoListadoR, manejoAgregarR],
-            contenido: ["Listar Rutina", "Agregar Rutina"],
+            funciones: [manejoListadoR, manejoAgregarR, manejoAsignarR],
+            contenido: ["Listar Rutina", "Agregar Rutina", "Asignar Rutina"],
             clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
         },
         {
@@ -178,6 +186,10 @@ const Admin =(props)=>{
                         dat={datosEditar} 
                         reiniciarMain={reiniciarEstados}/>
                     :<></>
+                }
+
+                {
+                    manejoAgregarEjercicio?<FormulatioEjercicio/>:<></>
                 }
             </article>
 
