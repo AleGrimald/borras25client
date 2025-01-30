@@ -152,6 +152,28 @@
         font-size: 14px;
         font-weight: 400;
     }
+
+    .nav_boton{
+        width: 30%;
+        position: relative;
+        right: 10px;
+        top: 0px;
+    }
+
+    .boton_unete{
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: 400;
+        border-radius: 5px;
+        transition: all .3s;
+
+        &:active{
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+    }
 }
 
 /* Dispositivos medianos (tabletas en modo vertical, teléfonos móviles en modo horizontal) */

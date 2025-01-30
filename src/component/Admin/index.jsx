@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import './Admin.css';
+import './AdminMediaQuery.css'
 import { useEffect, useState } from 'react';
 
 import FormulatioAlumno from '../FormularioAlumno';
