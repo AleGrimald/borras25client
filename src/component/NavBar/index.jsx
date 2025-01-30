@@ -6,8 +6,8 @@ const NavBar = (props)=>{
         <div className='nav_logo'>
             <img className='logo_img' src="logo_borras.svg" alt="" />
             <div className='logo_texto'>
-                <h1 className='texto_h1'>BORRAS FRANCO</h1>
-                <h5 className='texto_h5'>PROF. EDUCACION FISICA</h5>
+                <h1 className='nav_texto_h1'>BORRAS FRANCO</h1>
+                <h5 className='nav_texto_h5'>PROF. EDUCACION FISICA</h5>
             </div>
         </div>
 

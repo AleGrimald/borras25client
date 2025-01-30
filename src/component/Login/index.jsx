@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './Login.css';
 import './MediaQueryLogin.css';
 import NavBar from '../NavBar';
