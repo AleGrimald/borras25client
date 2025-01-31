@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import './Formulario.css'
 import { useState, useEffect } from "react";
 
 import ModalFormulario from "../ModalFormularios";
@@ -26,17 +27,33 @@ const FormulatioAlumno=(porps)=>{
     const [opcionPlan, setOpcionPlan] = useState("0");
     const [fechaI, setFechaI] = useState("");
     const [fechaF, setFechaF] = useState("");
+    const [estado, setEstado] = useState("");
 
     const [modal, setModal] = useState(false);
     
     useEffect(() => {
         if (fechaI) {
             const fechaInicio = new Date(fechaI);
-            const fechaFin = new Date(fechaInicio);
-            fechaFin.setDate(fechaFin.getDate() + 30);
-            setFechaF(fechaFin.toISOString().split('T')[0]);
+            if (!isNaN(fechaInicio)) {
+                const fechaFin = new Date(fechaInicio);
+                fechaFin.setDate(fechaFin.getDate() + 30);
+                setFechaF(fechaFin.toISOString().split('T')[0]);
+    
+                const fechaActual = new Date();
+                const diferenciaDias = Math.floor((fechaFin - fechaActual) / (1000 * 60 * 60 * 24));
+    
+                if (diferenciaDias < 0) {
+                    setEstado("Impago");
+                } else if (diferenciaDias <= 5) {
+                    setEstado("Próximo a vencer");
+                } else {
+                    setEstado("Pagado");
+                }
+            } else {
+                console.error('Invalid start date:', fechaI);
+            }
         }
-    }, [fechaI]);
+    }, [fechaI]); // Solo dependemos de "fechaI"
 
     const manejoFormulario = async (e)=>{
         e.preventDefault();
@@ -50,7 +67,6 @@ const FormulatioAlumno=(porps)=>{
             }
 
             let idUsuario = Math.max(...usuario.map(u=> u.id_cliente)) +1;
-            console.log(idUsuario);
 
             datos = {
                 id: idUsuario,
@@ -72,7 +88,7 @@ const FormulatioAlumno=(porps)=>{
                 pass: contraseña,
                 fechaInicio: fechaI,
                 fechaFin: fechaF,
-                estado: "Pagado",
+                estado: estado,
                 plan: parseInt(opcionPlan),
             }
 

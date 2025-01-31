@@ -32,3 +32,21 @@
     padding: 9px 30px;
     border-radius: 7px;
 }
+
+@media (max-width: 600px){
+    .contenedor_modal{
+        padding: 1rem 1.2rem;
+        top: 30%;    
+    }
+    .contenedor_modal>h4{
+        font-size: 20px;
+    }
+    .contenedor_modal>h6{
+        font-size: 14px;
+
+    }
+    .contenedor_modal>button{
+        font-size: 14px;
+
+    }
+}

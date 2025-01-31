@@ -83,6 +83,7 @@ const ListaAlumnos =(props)=>{
                         <section className='section_alumno_datos_central'>
                             <img className='alumno_img_central' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTL1u8S1Nl0_yHeJLr-XRUSwTP-y-iyXq4Jw&s" alt="persona" />
                         </section>
+
                         <section className='section_alumno_cuenta_central'>
                             <div className='alimno_datos_contacto_central'>
                                 <h5 className='alumno_h4_central'>{user.apellido}, {user.nombreCliente}</h5>
@@ -91,11 +92,12 @@ const ListaAlumnos =(props)=>{
                             <p className='cuenta_p_central'>Entrenamiento: {user.nombre}</p>
                             <p className='cuenta_p_central'>Estado: {user.estado}</p>
                         </section>
+                        
                         <section className='section_alumno_btn_central'>
                             <button onClick={()=>manejoEditar(user)} className='alumno_btn_editar'>Editar</button>
                             <button onClick={()=>manejoEliminar(user)} className='alumno_btn_borrar'>Borrar</button>
                         </section>
-                </article>
+                    </article>
             )
             :usuarios.sort((a,b)=> a.apellido.localeCompare(b.apellido)).map((user, index) =>
                 <article className='tarjeta_alumno_central' key={index}>

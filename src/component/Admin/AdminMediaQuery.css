@@ -1,3 +1,150 @@
 @media (max-width: 600px) {
+    .contenedor_admin{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .admin_main{
+        width: 100%;
+        padding: 10px 0;
+        display: grid;
+        grid-template-columns: 1fr;        
+        grid-template-areas: 
+            "lista"
+            "panel"
+            "deudores";
+        background-color: rgb(255, 255, 255);
+        gap: 0;
+    }
     
+    .btn_sandwich{
+        width: 60px;
+        height: 40px;
+        border-radius: 10px;
+        border: none;
+        font-size: 20px;
+        color: white;
+        display: block;
+        background-color: rgb(41, 41, 41);
+
+    }
+    .main_panel_lateral_oculto{
+        width: 100%;
+
+        overflow-y:auto;
+        padding: 2rem 1rem;
+    
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        background-color: rgb(255, 255, 255);
+
+        position: relative;
+        top: 0;
+        left: 0;
+
+        grid-area: lista;
+    }
+    .main_panel_lateral{
+        display: none;
+    }
+
+
+
+    .main_panel_central{
+        width: 100%;
+        height: 60dvh;
+        padding: 20px; 
+        overflow-Y: auto;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px 0;
+        background-color: rgb(193, 226, 228);
+
+        grid-area: panel;
+    }
+
+    .tarjeta_alumno_central{
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: 
+        "foto btn"
+        "info info";
+        gap: 0px;
+        background-color: rgb(255, 255, 255);
+    }
+    
+    .section_alumno_datos_central{
+        width: 100%;
+        height: 100%;
+        
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        grid-area: foto;
+    }
+    .alumno_img_central{
+        width: 100px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        
+    }
+    .section_alumno_cuenta_central{
+        width: 100%;
+        height: 100%;
+        padding: 10px 0px;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+
+        grid-area: info;
+    }
+    .section_alumno_btn_central{
+        grid-area: btn;
+        width: 100%;
+        height: 100%;
+        padding: 0 20px;
+        justify-content: center;
+        align-items: flex-end;
+    }
+    .alumno_btn_editar,.alumno_btn_borrar{
+        width: 40%;
+    }
+    .alumno_h4_central{
+        font-size: 18px;
+    }
+
+
+
+
+    .main_panel_alumno{
+        width: 100%;
+        
+        height: auto;        
+        padding: 1rem .5rem;
+        border: 1px solid rgba(0, 0, 0, 0.801);
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+    
+        background-color: rgb(255, 255, 255);
+
+        grid-area: deudores;
+    }
 }

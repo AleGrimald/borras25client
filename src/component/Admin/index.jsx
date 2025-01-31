@@ -11,6 +11,7 @@ import FormulatioEjercicio from '../FormularioEjercicio';
 
 const Admin =(props)=>{
     const {manejoLogin} = props;
+    const [btnSandwich, setBtnSandwich]=useState(false);
     const [usuario, setUsuarios] = useState([]);
     const [alumnoImpago, setAlumnoImpago] = useState([]);
     const [actualizarUsuario, setActualizarUsuario] = useState(false);
@@ -139,12 +140,18 @@ const Admin =(props)=>{
             </div>
 
             <div className='nav_boton'>
+                <button onClick={()=>setBtnSandwich(!btnSandwich)} className='btn_sandwich'>☰</button>
+
                 <button onClick={manejoLogin} className='boton_unete'>Log-out</button>
             </div>
+
+
         </nav>
         <main className='admin_main'>
-            <aside className='main_panel_lateral'>
+
+            <aside className={btnSandwich?'main_panel_lateral_oculto':'main_panel_lateral'}>
                 {
+                    
                     panelIzq.map((p, index)=><PanelIzqAdmin 
                         key={index} 
                         setBtn={p.setBtn}
@@ -155,6 +162,7 @@ const Admin =(props)=>{
                         contenido={p.contenido}
                         clases={p.clases}
                     />)
+                    
                 }
             </aside>
 

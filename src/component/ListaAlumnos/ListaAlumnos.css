@@ -22,3 +22,22 @@ input[type="search"]{
     left: 90px;
     top: 2px;
 }
+
+@media (max-width: 600px) {
+    .contenedor_buscar{
+        width: 100%;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0;
+    }
+    .lblBuscar{
+        position: static;
+        font-size: 18px;
+    }
+    #buscar{
+        width: 100%;
+    }
+
+}

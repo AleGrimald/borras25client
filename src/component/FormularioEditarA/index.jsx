@@ -26,15 +26,15 @@ const FormulatioEditarA=(porps)=>{
     const [contraseña, setContraseña] = useState("");
     const [confContraseña, setConfContraseña] = useState("");
     const [opcionPlan, setOpcionPlan] = useState("0");
-    const [fechaI, setFechaI] = useState("1950-01-01");
+    const [fechaI, setFechaI] = useState("");
     const [fechaF, setFechaF] = useState("");
+    const [estado, setEstado] = useState("");
 
     const [modal, setModal] = useState(false);
 
-    useEffect(()=>{
-        if (dat && dat.length > 0)
-        {
-            console.log("useEffect del Editar")
+    useEffect(() => {
+        if (dat && dat.length > 0) {
+            console.log("useEffect del Editar");
             setIdCliente(dat[0].id_cliente);
             setApellido(dat[0].apellido);
             setNombre(dat[0].nombreCliente);
@@ -53,31 +53,44 @@ const FormulatioEditarA=(porps)=>{
             setUsuarioInp(dat[0].usuario);
             setContraseña(dat[0].passw);
             setConfContraseña(dat[0].passw);
-
-            const fechaFormateada = dat[0].fecha_inicio.split('T')[0];
-            setFechaI(fechaFormateada);
-
+            setFechaI(dat[0].fecha_inicio.split('T')[0]);
+    
+            switch (dat[0].nombre) {
+                case "Basico": setOpcionPlan("1"); break;
+                case "Competitivo": setOpcionPlan("2"); break;
+                case "Profesional": setOpcionPlan("3"); break;
+                default: setOpcionPlan("0"); break;
+            }
+        } else {
+            return;
+        }
+    }, [dat]);
+    
+    useEffect(() => {
+        if (fechaI) {
             const fechaInicio = new Date(fechaI);
             if (!isNaN(fechaInicio)) {
                 const fechaFin = new Date(fechaInicio);
                 fechaFin.setDate(fechaFin.getDate() + 30);
                 setFechaF(fechaFin.toISOString().split('T')[0]);
+    
+                const fechaActual = new Date();
+                const diferenciaDias = Math.floor((fechaFin - fechaActual) / (1000 * 60 * 60 * 24));
+    
+                if (diferenciaDias < 0) {
+                    setEstado("Impago");
+                } else if (diferenciaDias <= 5) {
+                    setEstado("Próximo a vencer");
+                } else {
+                    setEstado("Pagado");
+                }
             } else {
                 console.error('Invalid start date:', fechaI);
             }
-
-
-            switch (dat[0].nombre) {
-                case "Basico": setOpcionPlan("1");break;
-                case "Competitivo": setOpcionPlan("2");break;
-                case "Profesional": setOpcionPlan("3");break;
-                default:setOpcionPlan("0"); break;
-            }
-        }else{
-            return
         }
-
-    },[dat, fechaI]);
+    }, [fechaI]); // Solo dependemos de "fechaI"
+    
+    
 
     const manejoFormularioEditar = async (e)=>{
         e.preventDefault();
@@ -111,7 +124,7 @@ const FormulatioEditarA=(porps)=>{
                 pass: contraseña,
                 fechaInicio: fechaI,
                 fechaFin: fechaF,
-                estado: "Pagado",
+                estado: estado,
                 plan: parseInt(opcionPlan),
             }
 
