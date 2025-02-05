@@ -25,28 +25,29 @@ const Login = (props)=>{
 
     }, []);
 
-    const manejoSubmit = async (e)=>{
+    const manejoSubmit = async (e) => {
         e.preventDefault();
         let inp_usuario = document.querySelector("#inp_usuario").value;
         let inp_passw = document.querySelector("#inp_passw").value;
         let encontrado = false;
-
-        await usuarios.map(user=>{
-            if(user.usuario === inp_usuario && user.passw === inp_passw && user.conectado===0){
-                console.log("ES HORA DE ENTRENAR, ",user.usuario);
-                if(user.usuario==="admin"){
+    
+        for (const user of usuarios) {
+            if (user.usuario === inp_usuario && user.passw === inp_passw && user.conectado === 0) {
+                console.log("ES HORA DE ENTRENAR, ", user.usuario);
+                if (user.usuario === "admin") {
                     manejoAdmin();
-                }else{
-                    manejoAlumno(`${user.usuario}`);
+                } else {
+                    manejoAlumno(user.usuario);
                 }
-
-                const datos ={id:user.id_usuario, conect: 1};
+    
+                const datos = { id: user.id_usuario, conect: 1 };
                 setIdConectado(user.id_usuario);
+    
                 try {
-                    const response = fetch('https://borras25server.vercel.app/actualizar_login', {
+                    const response = await fetch('https://borras25server.vercel.app/actualizar_login', {
                         method: 'PUT',
                         headers: {
-                        'Content-Type': 'application/json'
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(datos)
                     });
@@ -56,20 +57,20 @@ const Login = (props)=>{
                     } else {
                         console.log("Error al editar los datos.");
                     }
-                }catch(error){
-                    console.log(error)
+                } catch (error) {
+                    console.log(error);
                 }
-
-                encontrado=true;
-                return;
+    
+                encontrado = true;
+                break;
             }
-        })
-
-        if(!encontrado){
-            encontrado=false;
+        }
+    
+        if (!encontrado) {
             setMensaje("Usuario o Contraseña incorrecto.");
         }
     }
+    
 
     return <div className="contenedor_login">
         <NavBar clase ="nav_bar"/>
