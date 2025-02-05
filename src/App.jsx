@@ -9,9 +9,29 @@ import { useState } from 'react';
 function App() {
   const navegador = useNavigate();
   const [pathAlumno, setPathAlumno] = useState("");
+  const [idConectado, setIdConectado] = useState();
 
   const manejoLogin= ()=>{
-    navegador('/');   
+    navegador('/');
+
+    const datos ={id:idConectado, conect: 0};
+    try {
+        const response = fetch('https://borras25server.vercel.app/actualizar_login', {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (response.ok) {
+            console.log("¡Usuario y Cliente editado exitosamente!");
+        } else {
+            console.log("Error al editar los datos.");
+        }
+    }catch(error){
+        console.log(error)
+    }
   };
 
   const manejoAdmin= ()=>{
@@ -27,7 +47,7 @@ function App() {
   return (
     <div className='App'>
       <Routes>        
-        <Route path='/' element={<Login manejoAdmin={manejoAdmin} manejoAlumno={manejoAlumno}/>} />
+        <Route path='/' element={<Login setIdConectado={setIdConectado} manejoAdmin={manejoAdmin} manejoAlumno={manejoAlumno}/>} />
         <Route path='/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu' element={<Admin manejoLogin={manejoLogin}/>} />
         <Route path={pathAlumno} element={<Alumno manejoLogin={manejoLogin}/>} />
       </Routes>

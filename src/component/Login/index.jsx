@@ -5,7 +5,7 @@ import NavBar from '../NavBar';
 import { useEffect, useState } from 'react';
 
 const Login = (props)=>{
-    const {manejoAdmin, manejoAlumno} = props;
+    const {manejoAdmin, manejoAlumno, setIdConectado} = props;
     const [mensaje, setMensaje] = useState("");
     const [usuarios, setUsuarios] = useState([]);
     
@@ -16,7 +16,7 @@ const Login = (props)=>{
         fetch(urlP)
         .then(response => {
             if (!response.ok) {
-            throw new Error('Network response was not ok');
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
@@ -25,19 +25,39 @@ const Login = (props)=>{
 
     }, []);
 
-    const manejoSubmit =(e)=>{
+    const manejoSubmit = async (e)=>{
         e.preventDefault();
         let inp_usuario = document.querySelector("#inp_usuario").value;
         let inp_passw = document.querySelector("#inp_passw").value;
         let encontrado = false;
 
-        usuarios.map(user=>{
-            if(user.usuario === inp_usuario && user.passw === inp_passw){
+        await usuarios.map(user=>{
+            if(user.usuario === inp_usuario && user.passw === inp_passw && user.conectado===0){
                 console.log("ES HORA DE ENTRENAR, ",user.usuario);
                 if(user.usuario==="admin"){
                     manejoAdmin();
                 }else{
                     manejoAlumno(`${user.usuario}`);
+                }
+
+                const datos ={id:user.id_usuario, conect: 1};
+                setIdConectado(user.id_usuario);
+                try {
+                    const response = fetch('https://borras25server.vercel.app/actualizar_login', {
+                        method: 'PUT',
+                        headers: {
+                        'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(datos)
+                    });
+    
+                    if (response.ok) {
+                        console.log("¡Usuario y Cliente editado exitosamente!");
+                    } else {
+                        console.log("Error al editar los datos.");
+                    }
+                }catch(error){
+                    console.log(error)
                 }
 
                 encontrado=true;
