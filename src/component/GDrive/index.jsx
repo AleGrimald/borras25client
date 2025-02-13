@@ -38,31 +38,36 @@ const GDrive = () => {
     };
 
     return (
-        <div>
-        <h1>Archivos en Google Drive</h1>
-        <button onClick={() => gapi.auth2.getAuthInstance().signOut()}>Desconectar</button>
-        <table>
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Acción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {files.map(file => (
-                <tr key={file.id}>
-                <td>{file.name}</td>
-                <td><button onClick={() => handleViewFile(file)}>Ver</button></td>
+        <div style={ {width:"100%"}}>
+            <h1>Archivos en Google Drive</h1>
+            <button onClick={() => gapi.auth2.getAuthInstance().signOut()}>Desconectar</button>
+            <table>
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Acción</th>
                 </tr>
-            ))}
-            </tbody>
-        </table>
-        {selectedFile && (
-            <div style={{ marginTop: '20px' }}>
-            <h2>Visor de PDF</h2>
-            <iframe src={selectedFile} width="100%" height="500px" title="Visor de PDF"></iframe>
-            </div>
-        )}
+                </thead>
+                <tbody>
+                {files.map(file => (
+                    <tr key={file.id}>
+                    <td>{file.name}</td>
+                    <td><button onClick={() => handleViewFile(file)}>Ver</button></td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            
+                {
+                    selectedFile
+                    ?<div style={{ marginTop: '20px' }}>
+                        <h2>Visor de PDF</h2>
+                        <iframe src={selectedFile} width="100%" height="500px" title="Visor de PDF"></iframe>
+                    </div>
+                    :<></>
+                }
+                
+            
         </div>
     );
     };
