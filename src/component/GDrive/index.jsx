@@ -34,7 +34,7 @@ const GDrive = () => {
     }, []);
 
     const handleViewFile = (file) => {
-        setSelectedFile(file.webViewLink);
+        setSelectedFile(`https://drive.google.com/file/d/${file.id}/preview`);
     };
 
     return (
@@ -65,7 +65,8 @@ const GDrive = () => {
         )}
         </div>
     );
-};
+    };
 
 export default GDrive;
+
 
