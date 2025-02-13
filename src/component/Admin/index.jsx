@@ -27,6 +27,19 @@ const Admin =(props)=>{
     const [manejoAgregarAlumno, setManejoAgregarAlumno] = useState(false);
     const [manejoAgregarEjercicio, setManejoAgregarEjercicio] = useState(false);
 
+    useEffect(()=>{
+        const manejoCierreVentana = (e)=>{
+            e.preventDefault();
+            manejoLogin();
+            e.returnValue ='';
+        }
+
+        window.addEventListener('beforeunload', manejoCierreVentana);
+
+        return ()=>{
+            window.removeEventListener('beforeunload', manejoCierreVentana);
+        }
+    },[manejoLogin]);
 
     useEffect(() => {
         const urlP = 'https://borras25server.vercel.app/admin';
