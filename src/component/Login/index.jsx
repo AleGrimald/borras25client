@@ -8,6 +8,7 @@ const Login = (props)=>{
     const {manejoAdmin, manejoAlumno, setIdConectado} = props;
     const [mensaje, setMensaje] = useState("");
     const [usuarios, setUsuarios] = useState([]);
+    const [btnLoginPulsado, setBtnLoginPulsado] = useState(false);
     
     useEffect(() => {
         const urlP = 'https://borras25server.vercel.app/';
@@ -23,10 +24,12 @@ const Login = (props)=>{
         .then(data => {setUsuarios(data)})
         .catch(error => console.error('Error fetching data:', error));
 
-    }, []);
+    }, [btnLoginPulsado]);
 
     const manejoSubmit = async (e) => {
         e.preventDefault();
+        setBtnLoginPulsado(!btnLoginPulsado);
+
         let inp_usuario = document.querySelector("#inp_usuario").value;
         let inp_passw = document.querySelector("#inp_passw").value;
         let encontrado = false;
