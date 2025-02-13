@@ -8,6 +8,7 @@ import FormulatioEditarA from '../FormularioEditarA';
 import ListaAlumnos from '../ListaAlumnos';
 import PanelIzqAdmin from '../PanelIzqAdmin'
 import FormulatioEjercicio from '../FormularioEjercicio';
+import GDrive from '../GDrive'
 
 const Admin =(props)=>{
     const {manejoLogin} = props;
@@ -26,6 +27,7 @@ const Admin =(props)=>{
     const [manejoListarAlumno, setManejoListarAlumno] = useState(false);
     const [manejoAgregarAlumno, setManejoAgregarAlumno] = useState(false);
     const [manejoAgregarEjercicio, setManejoAgregarEjercicio] = useState(false);
+    const [manejoListarRutina, setManejoListarRutina] = useState(false);
 
     useEffect(()=>{
         const manejoCierreVentana = (e)=>{
@@ -67,7 +69,9 @@ const Admin =(props)=>{
         setManejoListarAlumno(false);
         setManejoAgregarEjercicio(false);
         setFormEditar(false);
+        setManejoListarRutina(false);
     }
+
 
     const manejoListadoA =()=>{
         reiniciarEstados();
@@ -80,7 +84,7 @@ const Admin =(props)=>{
 
     const manejoListadoR = ()=>{
         reiniciarEstados();
-        setManejoAgregarAlumno(!manejoAgregarAlumno);
+        setManejoListarRutina(!manejoListarRutina);
     }
     const manejoAgregarR = ()=>{
         reiniciarEstados();
@@ -212,6 +216,10 @@ const Admin =(props)=>{
 
                 {
                     manejoAgregarEjercicio?<FormulatioEjercicio/>:<></>
+                }
+
+                {
+                    manejoListarRutina?<GDrive/>:<></>
                 }
             </article>
 
