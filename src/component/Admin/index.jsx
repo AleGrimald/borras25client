@@ -219,7 +219,7 @@ const Admin =(props)=>{
                 }
 
                 {
-                    manejoListarRutina?<GDrive/>:<></>
+                    manejoListarRutina?<GDrive usuario={usuario}/>:<></>
                 }
             </article>
 

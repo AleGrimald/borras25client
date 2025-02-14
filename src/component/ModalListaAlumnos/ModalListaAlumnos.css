@@ -1,0 +1,51 @@
+.modal_lista_alumnos {
+    width: 350px;
+    height: 220px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    position: absolute;
+    top: 250px;
+    left: 350px;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.modal_lista_alumnos form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.modal_lista_alumnos legend {
+    font-size: 1.5em;
+    color: #007BFF;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal_lista_alumnos select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal_lista_alumnos .btn-confirmar {
+    padding: 10px 20px;
+    color: white;
+    background-color: #28A745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal_lista_alumnos .btn-confirmar:hover {
+    background-color: #218838;
+}

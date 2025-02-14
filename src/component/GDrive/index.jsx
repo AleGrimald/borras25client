@@ -1,9 +1,15 @@
+/* eslint-disable react/prop-types */
+import './GDrive.css'
 import { useEffect, useState } from 'react';
 import { gapi } from 'gapi-script';
+import ModalListaAlumnos from "../ModalListaAlumnos";
 
-const GDrive = () => {
+const GDrive = (props) => {
+    const {usuario} = props;
     const [files, setFiles] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [habilitarModal, setHabilitarModal] = useState(false);
+    const [link, setLink] = useState();
 
     const updateSigninStatus = (isSignedIn) => {
         if (isSignedIn) {
@@ -37,41 +43,51 @@ const GDrive = () => {
         setSelectedFile(`https://drive.google.com/file/d/${file.id}/preview`);
     };
 
+    const asignarRutina= (file)=>{
+        setHabilitarModal(true);
+        setLink(`https://drive.google.com/file/d/${file.id}/preview`)
+    }
+
     return (
-        <div style={ {width:"100%"}}>
-            <h1>Archivos en Google Drive</h1>
-            <button onClick={() => gapi.auth2.getAuthInstance().signOut()}>Desconectar</button>
-            <table>
+        <div className='contenedor_gdrive'>
+            <h2 className='gdrive_h2'>Archivos en Google Drive</h2>
+            <button onClick={() => gapi.auth2.getAuthInstance().signOut()} className='btn-desconectar'>Desconectar</button>
+            <table className='tabla-archivos'>
                 <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Acción</th>
-                </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acción</th>
+                        <th>Asignacion</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {files.map(file => (
-                    <tr key={file.id}>
-                    <td>{file.name}</td>
-                    <td><button onClick={() => handleViewFile(file)}>Ver</button></td>
-                    </tr>
-                ))}
+                    {files.map(file => (
+                        <tr key={file.id}>
+                            <td>{file.name}</td>
+                            <td><button onClick={() => handleViewFile(file)} className='btn-accion'>Ver</button></td>
+                            <td><button onClick={() => asignarRutina(file)} className='btn-accion'>Asignar</button></td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
+            {
+                habilitarModal?<ModalListaAlumnos 
+                    usuario={usuario} 
+                    setHabilitarModal={setHabilitarModal}
+                    link={link}
+                />:<></>
+            }
             
-                {
-                    selectedFile
-                    ?<div style={{ marginTop: '20px' }}>
-                        <h2>Visor de PDF</h2>
-                        <iframe src={selectedFile} width="100%" height="500px" title="Visor de PDF"></iframe>
-                    </div>
-                    :<></>
-                }
-                
-            
+            {
+                selectedFile
+                ?<div style={{ marginTop: '20px' }}>
+                    <h2>Visor de PDF</h2>
+                    <iframe src={selectedFile} width="100%" height="500px" title="Visor de PDF" sandbox="allow-scripts allow-same-origin"></iframe>
+                </div>
+                :<></>
+            }
         </div>
     );
-    };
+};
 
 export default GDrive;
-
-
