@@ -1,0 +1,39 @@
+.contenedor_upload {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.upload_h2 {
+    text-align: center;
+    color: #007BFF;
+}
+
+.input-file {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-subir {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    color: white;
+    background-color: #FF5733;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-subir:hover {
+    background-color: #E04B2E;
+}

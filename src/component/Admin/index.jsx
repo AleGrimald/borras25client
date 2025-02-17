@@ -7,8 +7,8 @@ import FormulatioAlumno from '../FormularioAlumno';
 import FormulatioEditarA from '../FormularioEditarA';
 import ListaAlumnos from '../ListaAlumnos';
 import PanelIzqAdmin from '../PanelIzqAdmin'
-import FormulatioEjercicio from '../FormularioEjercicio';
-import GDrive from '../GDrive'
+import GDriveView from '../GDriveView'
+import GDriveUpload from '../GDrivepload';
 
 const Admin =(props)=>{
     const {manejoLogin} = props;
@@ -22,12 +22,11 @@ const Admin =(props)=>{
 
     const [btnAlumno, setBtnAlumno] = useState(false);
     const [btnRutina, setBtnRutina] = useState(false);
-    const [btnEjercicio, setBtnEjercicio] = useState(false);
 
     const [manejoListarAlumno, setManejoListarAlumno] = useState(false);
     const [manejoAgregarAlumno, setManejoAgregarAlumno] = useState(false);
-    const [manejoAgregarEjercicio, setManejoAgregarEjercicio] = useState(false);
     const [manejoListarRutina, setManejoListarRutina] = useState(false);
+    const [manejoAgregarRutina, setManejoAgregarRutina] = useState(false);
 
     useEffect(()=>{
         const manejoCierreVentana = (e)=>{
@@ -67,9 +66,9 @@ const Admin =(props)=>{
     const reiniciarEstados=()=>{
         setManejoAgregarAlumno(false);
         setManejoListarAlumno(false);
-        setManejoAgregarEjercicio(false);
         setFormEditar(false);
         setManejoListarRutina(false);
+        setManejoAgregarRutina(false);
     }
 
 
@@ -88,21 +87,9 @@ const Admin =(props)=>{
     }
     const manejoAgregarR = ()=>{
         reiniciarEstados();
-        setManejoAgregarAlumno(!manejoAgregarAlumno);
+        setManejoAgregarRutina(!manejoAgregarRutina);
     }
-    const manejoAsignarR = ()=>{
-        reiniciarEstados();
-        setManejoAgregarAlumno(!manejoAgregarAlumno);
-    }
-
-    const manejoListadoE = ()=>{
-        reiniciarEstados();
-        setManejoAgregarAlumno(!manejoAgregarAlumno);
-    }
-    const manejoAgregarE = ()=>{
-        reiniciarEstados();
-        setManejoAgregarEjercicio(!manejoAgregarEjercicio);
-    }
+    
 
     const panelIzq = [
         {
@@ -119,17 +106,8 @@ const Admin =(props)=>{
             valueBtn: btnRutina,
             btnNombre: "Rutinas",
             condicion: btnRutina,
-            funciones: [manejoListadoR, manejoAgregarR, manejoAsignarR],
-            contenido: ["Listar Rutina", "Agregar Rutina", "Asignar Rutina"],
-            clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
-        },
-        {
-            setBtn: setBtnEjercicio,
-            valueBtn: btnEjercicio,
-            btnNombre: "Ejercicio",
-            condicion: btnEjercicio,
-            funciones: [manejoListadoE, manejoAgregarE],
-            contenido: ["Listar Ejercicio", "Agregar Ejercicio"],
+            funciones: [manejoListadoR, manejoAgregarR],
+            contenido: ["Listar Rutina", "Agregar Rutina"],
             clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
         },
     ];
@@ -215,11 +193,11 @@ const Admin =(props)=>{
                 }
 
                 {
-                    manejoAgregarEjercicio?<FormulatioEjercicio/>:<></>
+                    manejoListarRutina?<GDriveView usuario={usuario}/>:<></>
                 }
 
                 {
-                    manejoListarRutina?<GDrive usuario={usuario}/>:<></>
+                    manejoAgregarRutina?<GDriveUpload/>:<></>
                 }
             </article>
 

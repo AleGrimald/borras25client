@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import './GDrive.css'
+import './GDriveView.css'
 import { useEffect, useState } from 'react';
 import { gapi } from 'gapi-script';
 import ModalListaAlumnos from "../ModalListaAlumnos";
 
-const GDrive = (props) => {
+const GDriveView = (props) => {
     const {usuario} = props;
     const [files, setFiles] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -90,4 +90,4 @@ const GDrive = (props) => {
     );
 };
 
-export default GDrive;
+export default GDriveView;

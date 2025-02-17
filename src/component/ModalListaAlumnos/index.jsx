@@ -24,6 +24,8 @@ const ModalListaAlumnos = (props) =>{
             link: link
         };
 
+        console.log(datos)
+
         try {
             const response = await fetch('https://borras25server.vercel.app/asignar_rutina', {
                 method: 'PUT',
