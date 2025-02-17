@@ -5,24 +5,25 @@ import './ModalListaAlumnos.css';
 
 const ModalListaAlumnos = (props) =>{
     const {usuario, setHabilitarModal, link} = props;
-    const [opcionSeleccionada, setOpcion] = useState();
+    const [alumnoSeleccionado, setAlumnoSeleccionado] = useState();
 
     const manejoCambioSelect=(e)=>{
-        setOpcion(e.target.value);
+        setAlumnoSeleccionado(e.target.value);
     }
 
     const manejoSubmitAsignacion =async (e)=>{
         e.preventDefault();
 
-        if (!opcionSeleccionada) {
+        if (!alumnoSeleccionado) {
             console.log("Por favor, selecciona un alumno.");
             return;
         }
 
         const datos ={
-            id: opcionSeleccionada,
+            id: parseInt(alumnoSeleccionado),
             link: link
         };
+
         try {
             const response = await fetch('https://borras25server.vercel.app/asignar_rutina', {
                 method: 'PUT',
@@ -46,7 +47,7 @@ const ModalListaAlumnos = (props) =>{
     return <div className='modal_lista_alumnos'>
         <form onSubmit={manejoSubmitAsignacion}>
             <legend>Selecciona un alumno</legend>
-            <select onChange={manejoCambioSelect} value={opcionSeleccionada} name="" id="">
+            <select onChange={manejoCambioSelect} value={alumnoSeleccionado} name="" id="">
                 <option>Selecciona un alumno</option>
                 {
                     usuario.map((user, key)=><option key={key} value={user.id_cliente}>
