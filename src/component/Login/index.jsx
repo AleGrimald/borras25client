@@ -36,7 +36,6 @@ const Login = (props)=>{
     
         for (const user of usuarios) {
             if (user.usuario === inp_usuario && user.passw === inp_passw && user.conectado === 0) {
-                console.log("ES HORA DE ENTRENAR, ", user.usuario);
                 if (user.usuario === "admin") {
                     manejoAdmin();
                 } else {

@@ -71,7 +71,6 @@ const Admin =(props)=>{
         setManejoAgregarRutina(false);
     }
 
-
     const manejoListadoA =()=>{
         reiniciarEstados();
         setManejoListarAlumno(!manejoListarAlumno);

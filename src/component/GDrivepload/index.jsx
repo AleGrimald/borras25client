@@ -38,6 +38,21 @@ const GDriveUpload = () => {
         setFileToUpload(event.target.files[0]);
     };
 
+    const updateFilePermissions = (fileId) => {
+        return gapi.client.drive.permissions.create({
+            fileId: fileId,
+            resource: {
+                role: 'reader',
+                type: 'anyone',
+            },
+        }).then(() => {
+            console.log('Permisos actualizados para el archivo:', fileId);
+        }).catch((error) => {
+            console.error('Error updating file permissions:', error);
+            alert('Error actualizando los permisos del archivo. Por favor, revisa la consola para más detalles.');
+        });
+    };
+
     const handleUploadFile = () => {
         const boundary = '-------314159265358979323846';
         const delimiter = '\r\n--' + boundary + '\r\n';
@@ -71,9 +86,12 @@ const GDriveUpload = () => {
                     'Content-Type': 'multipart/related; boundary="' + boundary + '"',
                 },
                 'body': multipartRequestBody,
-            }).then(() => {
-                alert('Archivo subido exitosamente!');
-                setFileToUpload(null);
+            }).then((response) => {
+                const fileId = response.result.id;
+                updateFilePermissions(fileId).then(() => {
+                    alert('Archivo subido y permisos actualizados exitosamente!');
+                    setFileToUpload(null);
+                });
             }).catch((error) => {
                 console.error('Error uploading file:', error);
                 alert('Error subiendo el archivo. Por favor, revisa la consola para más detalles.');
@@ -91,5 +109,3 @@ const GDriveUpload = () => {
 };
 
 export default GDriveUpload;
-
-

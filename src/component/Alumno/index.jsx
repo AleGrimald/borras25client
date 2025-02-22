@@ -20,7 +20,9 @@ const Alumno = (props) => {
         </div>
       </nav>
 
-      <iframe src={datosAlumnoConectado.link_rutina} width="100%" height="500px" title="Visor de PDF" sandbox="allow-scripts allow-same-origin"></iframe>
+      <section className='alumno_visor_pdf'>
+        <iframe className='alumno_iframe' src={datosAlumnoConectado.link_rutina} title="Visor de PDF" sandbox="allow-scripts allow-same-origin"></iframe>
+      </section>
     </div>
   );
 };
