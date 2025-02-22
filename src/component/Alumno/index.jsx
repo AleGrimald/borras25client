@@ -1,25 +1,8 @@
+/* eslint-disable react/prop-types */
 import './Alumno.css'
-import { useEffect, useState } from 'react';
 
 const Alumno = (props) => {
-  const {manejoLogin} = props;
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const urlP = 'https://borras25server.vercel.app/alumno';
-    //const url = 'http://localhost:3000/alumno';
-
-    fetch(urlP)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => setUsers(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
+  const {manejoLogin, datosAlumnoConectado} = props;
 
   return (
     <div className='alumno'>
@@ -37,14 +20,7 @@ const Alumno = (props) => {
         </div>
       </nav>
 
-      <h1>Lista de Usuarios</h1>
-      <ul>
-        {users.map(user => (
-          <li key={user.id_cliente}>
-            {user.id_cliente} - {user.apellido} - {user.nombreCliente} - {user.telefono}
-          </li>
-        ))}
-      </ul>
+      <iframe src={datosAlumnoConectado.link_rutina} width="100%" height="500px" title="Visor de PDF" sandbox="allow-scripts allow-same-origin"></iframe>
     </div>
   );
 };

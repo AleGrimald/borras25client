@@ -10,6 +10,7 @@ function App() {
   const navegador = useNavigate();
   const [pathAlumno, setPathAlumno] = useState("");
   const [idConectado, setIdConectado] = useState();
+  const [datosAlumnoConectado, setDatosAlumnoConectado] = useState([]);
 
   const manejoLogin= ()=>{
     navegador('/');
@@ -39,8 +40,9 @@ function App() {
   };
 
   const manejoAlumno= (usuario)=>{
-    setPathAlumno(`/aSE43dfs6A7F8GE34${usuario}16A7F88D9ada56A7F8`);
-    navegador(`/aSE43dfs6A7F8GE34${usuario}16A7F88D9ada56A7F8`);
+    setPathAlumno(`/aSE43dfs6A7F8GE34${usuario.usuario}16A7F88D9ada56A7F8`);
+    navegador(`/aSE43dfs6A7F8GE34${usuario.usuario}16A7F88D9ada56A7F8`);
+    setDatosAlumnoConectado(usuario);
   };
   
 
@@ -49,7 +51,7 @@ function App() {
       <Routes>        
         <Route path='/' element={<Login setIdConectado={setIdConectado} manejoAdmin={manejoAdmin} manejoAlumno={manejoAlumno}/>} />
         <Route path='/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu' element={<Admin manejoLogin={manejoLogin}/>} />
-        <Route path={pathAlumno} element={<Alumno manejoLogin={manejoLogin}/>} />
+        <Route path={pathAlumno} element={<Alumno datosAlumnoConectado={datosAlumnoConectado} manejoLogin={manejoLogin}/>} />
       </Routes>
       <Footer />
     </div>

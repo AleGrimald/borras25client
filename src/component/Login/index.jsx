@@ -40,7 +40,9 @@ const Login = (props)=>{
                 if (user.usuario === "admin") {
                     manejoAdmin();
                 } else {
-                    manejoAlumno(user.usuario);
+                    console.log(user);
+                    manejoAlumno(user);
+
                 }
     
                 const datos = { id: user.id_usuario, conect: 1 };
@@ -56,9 +58,9 @@ const Login = (props)=>{
                     });
     
                     if (response.ok) {
-                        console.log("¡Usuario y Cliente editado exitosamente!");
+                        console.log("¡Hasta la proxima!");
                     } else {
-                        console.log("Error al editar los datos.");
+                        console.log("No se pudo desconectar la cuenta.");
                     }
                 } catch (error) {
                     console.log(error);
