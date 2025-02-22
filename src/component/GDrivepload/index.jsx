@@ -89,7 +89,7 @@ const GDriveUpload = () => {
             }).then((response) => {
                 const fileId = response.result.id;
                 updateFilePermissions(fileId).then(() => {
-                    alert('Archivo subido y permisos actualizados exitosamente!');
+                    console.log('Archivo subido y permisos actualizados exitosamente!');
                     setFileToUpload(null);
                 });
             }).catch((error) => {
