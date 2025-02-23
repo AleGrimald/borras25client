@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import './Admin.css';
 import './AdminMediaQuery.css'
@@ -11,7 +12,7 @@ import GDriveView from '../GDriveView'
 import GDriveUpload from '../GDrivepload';
 
 const Admin =(props)=>{
-    const {manejoLogin} = props;
+    const {manejoLogout} = props;
     const [btnSandwich, setBtnSandwich]=useState(false);
     const [usuario, setUsuarios] = useState([]);
     const [alumnoImpago, setAlumnoImpago] = useState([]);
@@ -28,19 +29,31 @@ const Admin =(props)=>{
     const [manejoListarRutina, setManejoListarRutina] = useState(false);
     const [manejoAgregarRutina, setManejoAgregarRutina] = useState(false);
 
-    useEffect(()=>{
-        const manejoCierreVentana = (e)=>{
-            e.preventDefault();
-            manejoLogin();
-            e.returnValue ='';
-        }
-
-        window.addEventListener('beforeunload', manejoCierreVentana);
-
-        return ()=>{
-            window.removeEventListener('beforeunload', manejoCierreVentana);
-        }
-    },[manejoLogin]);
+    useEffect(() => {
+        let ultimoTiempoActividad = Date.now();
+    
+        const actualizaTiempoUltimaActividad = () => {
+            ultimoTiempoActividad = Date.now();
+        };
+    
+        document.addEventListener('mousemove', actualizaTiempoUltimaActividad);
+        document.addEventListener('keydown', actualizaTiempoUltimaActividad);
+    
+        const interval = setInterval(() => {
+            if (Date.now() - ultimoTiempoActividad > 300000) {
+                alert("Se agotó el tiempo. Usuario inactivo");
+                manejoLogout();
+            }
+        }, 6000); // Verifica la actividad cada 60 segundos
+    
+        // Limpia los eventos y el intervalo al desmontar el componente
+        return () => {
+            document.removeEventListener('mousemove', actualizaTiempoUltimaActividad);
+            document.removeEventListener('keydown', actualizaTiempoUltimaActividad);
+            clearInterval(interval);
+        };
+    }, [manejoLogout]); // Dependencia para asegurarse de que useEffect se ejecute solo cuando manejoLogout cambie
+    
 
     useEffect(() => {
         const urlP = 'https://borras25server.vercel.app/admin';
@@ -57,7 +70,7 @@ const Admin =(props)=>{
         .catch(error => console.error('Error fetching data:', error));
 
         console.log("Lista de Alumnos Cargada con exito")
-    },[actualizarUsuario]);
+    },[actualizarUsuario, manejoListarAlumno, manejoAgregarAlumno]);
 
     useEffect(()=>{
         setAlumnoImpago(usuario.filter(user => user.estado === "Impago"));
@@ -89,7 +102,6 @@ const Admin =(props)=>{
         setManejoAgregarRutina(!manejoAgregarRutina);
     }
     
-
     const panelIzq = [
         {
             setBtn: setBtnAlumno,
@@ -136,7 +148,7 @@ const Admin =(props)=>{
             <div className='nav_boton'>
                 <button onClick={()=>setBtnSandwich(!btnSandwich)} className='btn_sandwich'>☰</button>
 
-                <button onClick={manejoLogin} className='boton_unete'>Log-out</button>
+                <button onClick={manejoLogout} className='boton_unete'>Log-out</button>
             </div>
 
 

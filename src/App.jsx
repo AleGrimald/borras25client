@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css';
 import Alumno from './component/Alumno';
 import Admin from './component/Admin';
 import Footer from './component/Footer';
 import Login from './component/Login';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const navegador = useNavigate();
@@ -12,28 +13,43 @@ function App() {
   const [idConectado, setIdConectado] = useState();
   const [datosAlumnoConectado, setDatosAlumnoConectado] = useState([]);
 
-  const manejoLogin= ()=>{
+  //Esta funcion desconecta a los ussuarios cuando dan click en el boton logout
+  const manejoLogout = async () => {
     navegador('/');
 
-    const datos ={id:idConectado, conect: 0};
+    const datos = { id: idConectado, conect: 0 };
     try {
-        const response = fetch('https://borras25server.vercel.app/actualizar_login', {
+        const response = await fetch('https://borras25server.vercel.app/actualizar_estado_conexion', {
             method: 'PUT',
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(datos)
         });
 
         if (response.ok) {
-            console.log("¡Usuario y Cliente editado exitosamente!");
+            console.log("¡Desconectado!");
         } else {
-            console.log("Error al editar los datos.");
+            console.log("Error al desconectar.");
         }
-    }catch(error){
-        console.log(error)
+    } catch (error) {
+        console.log(error);
     }
   };
+
+  //Esta funcion y useEffect manejan el evento del cierre de las pestañas o del navegador. Desconectar al ususario en la db
+  useEffect(() => {
+    const cleanup = cierreVentana(manejoLogout);
+    return cleanup;
+  }, [manejoLogout]);
+  const cierreVentana = (manejoLogout) => {
+    const manejoCierreVentana = (e) => {
+        e.preventDefault();
+        manejoLogout();
+    }
+    window.addEventListener('beforeunload', manejoCierreVentana);
+    return () => {window.removeEventListener('beforeunload', manejoCierreVentana);}
+  }
 
   const manejoAdmin= ()=>{
     navegador('/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu'); 
@@ -50,8 +66,15 @@ function App() {
     <div className='App'>
       <Routes>        
         <Route path='/' element={<Login setIdConectado={setIdConectado} manejoAdmin={manejoAdmin} manejoAlumno={manejoAlumno}/>} />
-        <Route path='/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu' element={<Admin manejoLogin={manejoLogin}/>} />
-        <Route path={pathAlumno} element={<Alumno datosAlumnoConectado={datosAlumnoConectado} manejoLogin={manejoLogin}/>} />
+        <Route path='/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu' element={
+          <Admin manejoLogout={manejoLogout}/>} 
+        />
+        <Route path={pathAlumno} element={
+          <Alumno 
+            datosAlumnoConectado={datosAlumnoConectado} 
+            manejoLogout={manejoLogout}
+          />} 
+        />
       </Routes>
       <Footer />
     </div>
