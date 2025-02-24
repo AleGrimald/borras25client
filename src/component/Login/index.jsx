@@ -26,6 +26,28 @@ const Login = (props)=>{
 
     }, [btnLoginPulsado]);
 
+    const ConectarUsuario = async (user)=>{
+        const datos = { id: user.id_usuario, conect: 1 };
+        setIdConectado(user.id_usuario);
+    
+        try {
+            const response = await fetch('https://borras25server.vercel.app/actualizar_estado_conexion', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            });
+            if (response.ok) {
+                console.log("¡Conectado!");
+            } else {
+                console.log("Error al actualizar el estado de conexion");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const manejoLogin = async (e) => {
         let inp_usuario = document.querySelector("#inp_usuario").value;
         let inp_passw = document.querySelector("#inp_passw").value;
@@ -41,28 +63,8 @@ const Login = (props)=>{
                 } else {
                     manejoAlumno(user);
                 }
-    
-                const datos = { id: user.id_usuario, conect: 1 };
-                setIdConectado(user.id_usuario);
-    
-                try {
-                    const response = await fetch('https://borras25server.vercel.app/actualizar_estado_conexion', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(datos)
-                    });
-    
-                    if (response.ok) {
-                        console.log("¡Conectado!");
-                    } else {
-                        console.log("Error al actualizar el estado de conexion");
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-    
+                
+                await ConectarUsuario(user)
                 encontrado = true;
                 break;
             }

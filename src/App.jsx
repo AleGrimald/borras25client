@@ -65,10 +65,18 @@ function App() {
   return (
     <div className='App'>
       <Routes>        
-        <Route path='/' element={<Login setIdConectado={setIdConectado} manejoAdmin={manejoAdmin} manejoAlumno={manejoAlumno}/>} />
+        <Route path='/' element={
+          <Login 
+            setIdConectado={setIdConectado} 
+            manejoAdmin={manejoAdmin} 
+            manejoAlumno={manejoAlumno}
+          />} 
+        />
+
         <Route path='/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu' element={
           <Admin manejoLogout={manejoLogout}/>} 
         />
+        
         <Route path={pathAlumno} element={
           <Alumno 
             datosAlumnoConectado={datosAlumnoConectado} 
