@@ -64,7 +64,7 @@ const FormulatioAlumno=(porps)=>{
     function initClient(nombreAlumno) {
         gapi.client.init({
             apiKey: 'AIzaSyA9Vrs2QzrIuemwqIfYpheiIsMPtgSqcE4',
-            clientId: '202413920451-7g41o3lfnbssaei19bkhvn2tnn4k0gb3.apps.googleusercontent.com',
+            clientId: '202413920451-5p4c1h28vgq75554qnppflmh3kspsarr.apps.googleusercontent.com',
             discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
             scope: 'https://www.googleapis.com/auth/drive.readonly',
         }).then(function () {

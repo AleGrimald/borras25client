@@ -7,8 +7,9 @@ import FormulatioAlumno from '../FormularioAlumno';
 import FormulatioEditarA from '../FormularioEditarA';
 import ListaAlumnos from '../ListaAlumnos';
 import PanelIzqAdmin from '../PanelIzqAdmin'
-import GDriveView from '../GDriveView'
+//import GDriveView from '../GDriveView'
 import GDriveUpload from '../GDrivepload';
+import GDriveViewFolder from '../GDriveViewFolder';
 
 const Admin =(props)=>{
     const {manejoLogout} = props;
@@ -203,7 +204,8 @@ const Admin =(props)=>{
                 }
 
                 {
-                    manejoListarRutina?<GDriveView usuario={usuario}/>:<></>
+                    //manejoListarRutina?<GDriveView usuario={usuario}/>:<></>
+                    manejoListarRutina?<GDriveViewFolder/>:<></>
                 }
 
                 {

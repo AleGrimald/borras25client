@@ -9,11 +9,12 @@
 
 .admin_main{
     width: 100%;
+    height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 
 .main_panel_lateral{
@@ -47,7 +48,7 @@
 
 .main_panel_central{
     width: 64%;
-    height: 100dvh;
+    height: 100%;
     padding: 20px;
     overflow-Y: auto;
     display: flex;
@@ -55,7 +56,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 30px;
-    background-color: rgb(178, 198, 199);
+    background-color: rgba(184, 201, 201, 0.8);
 }
 .tarjeta_alumno_central{
     width: 100%;

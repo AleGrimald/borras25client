@@ -1,17 +1,17 @@
-.header_nav{
-    width: 95%;
-    height: 70px;
-    padding: .5rem .2rem;
+.nav_bar{
+    width: 90%;
+    height: auto;
+    padding: .6rem 2rem;
+    margin: 5px 0;
     box-sizing: border-box;
-    border-radius: 40px;
-
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;    
-
+    align-items: center;
+    border-bottom: 1px solid rgb(90, 90, 90);
     background-color: rgba(255, 255, 255, 0.85);
-
 }
+
 .texto_h1,.texto_h5{
     color: rgb(26, 26, 26);
 }
@@ -24,51 +24,10 @@
     gap: .5rem;
 }
 .logo_img{
-    width: 54px;
+    width: 50px;
     aspect-ratio: 1/1;
-
 }
-.nav_lista{
-    width: 40%;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    
-}
-.lista_li{
-    padding: 0 .1rem .4rem .1rem;
-    list-style: none;
-    transition: all 1s;
-    color: rgb(26, 26, 26);
 
-    &:hover{
-        transform: scale(1.1);
-    }
-
-    &::after{
-        content: '';
-        display: block;
-        height: 2px;
-        background-color: rgb(26, 26, 26);
-    
-        position: absolute;
-        bottom: 0;
-        left: 0;
-    }
-
-    &:hover::after{
-        animation: bordeCrece .3s linear 1 forwards;
-    }
-}
-.li_a{
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-    color: rgb(26, 26, 26);
-}
 .nav_boton{
     width: 15%;
     height: 100%;
@@ -78,8 +37,7 @@
 
 }
 .boton_unete{
-    width: 80%;
-    height: 90%;
+    padding: 10px 20px;
     font-size: 20px;
     font-weight: 500;
     color: white;
@@ -94,43 +52,16 @@
     }
 }
 
-@keyframes bordeCrece {
-    0% {
-        width: 0;
-        border-radius: 0;
-    }
-    100% {
-        width: 100%;
-        border-radius: 15px;
-    }
-}
-
-
-.nav_bar{
-    width: 90%;
-    height: 60px;
-    margin: 5px 0;
-    padding: .5rem 1rem;
-    box-sizing: border-box;
-    border-radius: 40px;
-    border: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    background-color: rgba(255, 255, 255, 0.85);
-}
-
 
 @media (max-width: 600px) {
     .nav_bar{
         width: 100%;
         height: auto;
         margin: 0;
-        padding: 10px 0;
+        padding: 5px 0;
         border-radius: 0px;
         flex-flow: column wrap;
-        gap: 15px 0;
+        gap: 5px 0;
     }
 
     .texto_h1,.texto_h5{
