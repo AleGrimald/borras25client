@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
 import './Formulario.css'
 import { useState, useEffect } from "react";
+import { gapi } from 'gapi-script';
 
 import ModalFormulario from "../ModalFormularios";
 
@@ -55,6 +55,53 @@ const FormulatioAlumno=(porps)=>{
         }
     }, [fechaI]); // Solo dependemos de "fechaI"
 
+    // Autenticación y configuración de la API
+    const cargarGApi=(nombreAlumno)=>{
+        gapi.load('client:auth2', ()=> initClient(nombreAlumno));
+    }
+    
+
+    function initClient(nombreAlumno) {
+        gapi.client.init({
+            apiKey: 'AIzaSyA9Vrs2QzrIuemwqIfYpheiIsMPtgSqcE4',
+            clientId: '202413920451-7g41o3lfnbssaei19bkhvn2tnn4k0gb3.apps.googleusercontent.com',
+            discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+            scope: 'https://www.googleapis.com/auth/drive.readonly',
+        }).then(function () {
+            crearCarpetaAlumno(nombreAlumno);
+        });
+    }
+
+    function crearCarpetaAlumno(nombreAlumno) {
+        gapi.client.drive.files.create({
+            resource: {
+                'name': nombreAlumno,
+                'mimeType': 'application/vnd.google-apps.folder'
+            },
+            fields: 'id'
+        }).then(function (response) {
+            var carpetaId = response.result.id;
+            var meses = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+            meses.forEach(function (mes) {
+                crearSubCarpeta(carpetaId, mes);
+            });
+        });
+    }
+
+    function crearSubCarpeta(carpetaPadreId, subCarpetaNombre) {
+        gapi.client.drive.files.create({
+            resource: {
+                'name': subCarpetaNombre,
+                'mimeType': 'application/vnd.google-apps.folder',
+                'parents': [carpetaPadreId]
+            },
+            fields: 'id'
+        }).then(function (response) {
+            console.log('Subcarpeta creada: ' + response.result.id);
+        });
+    }
+
+
     const manejoFormulario = async (e)=>{
         e.preventDefault();
         let datos={};
@@ -103,12 +150,14 @@ const FormulatioAlumno=(porps)=>{
 
                 if (response.ok) {
                     console.log("¡Usuario y Cliente agregados exitosamente!");
+                    cargarGApi(datos.nom);
                 } else {
                     console.log("Error al enviar los datos.");
                 }
             }catch (error) {
                 console.log(`Error al enviar los datos: ${error}`);
             }
+            
         }
         setModal(true);
     }

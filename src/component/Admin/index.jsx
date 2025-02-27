@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import './Admin.css';
 import './AdminMediaQuery.css'
@@ -70,7 +69,7 @@ const Admin =(props)=>{
         .catch(error => console.error('Error fetching data:', error));
 
         console.log("Lista de Alumnos Cargada con exito")
-    },[actualizarUsuario, manejoListarAlumno, manejoAgregarAlumno]);
+    },[actualizarUsuario, manejoListarAlumno]);
 
     useEffect(()=>{
         setAlumnoImpago(usuario.filter(user => user.estado === "Impago"));

@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 function App() {
   const navegador = useNavigate();
   const [pathAlumno, setPathAlumno] = useState("");
+  const [pathAdmin, setPathAdmin] = useState("");
   const [idConectado, setIdConectado] = useState();
   const [datosAlumnoConectado, setDatosAlumnoConectado] = useState([]);
 
@@ -51,7 +52,8 @@ function App() {
     return () => {window.removeEventListener('beforeunload', manejoCierreVentana);}
   }
 
-  const manejoAdmin= ()=>{
+  const manejoAdmin=()=>{
+    setPathAdmin('/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu')
     navegador('/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu'); 
   };
 
@@ -73,7 +75,7 @@ function App() {
           />} 
         />
 
-        <Route path='/asaHEh7JhJtiu9H0WQ00JH3jh4JHWJ34j08rj543asaHEh7JhJtiu9JHWJ34j08HWJ34j08rj543asaHEh7JhJtiu' element={
+        <Route path={pathAdmin} element={
           <Admin manejoLogout={manejoLogout}/>} 
         />
         

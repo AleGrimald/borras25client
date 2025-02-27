@@ -10,25 +10,61 @@ const Login = (props)=>{
     const [usuarios, setUsuarios] = useState([]);
     const [btnLoginPulsado, setBtnLoginPulsado] = useState(false);
     
+    const manejoLogin = async (e) => {
+        e.preventDefault();
+
+        let inp_usuario = document.querySelector("#inp_usuario").value;
+        let inp_passw = document.querySelector("#inp_passw").value;
+        let encontrado = false;
+
+        for (const user of usuarios) {
+            if (user.usuario === inp_usuario && user.passw === inp_passw && user.conectado === 0) {
+                if (user.usuario === "admin") {
+                    manejoAdmin();
+                } else {
+                    manejoAlumno(user);
+                }
+
+                encontrado = true;
+                await ConectarUsuario(user);
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            setMensaje("Usuario o Contraseña incorrecto.");
+            setBtnLoginPulsado(!btnLoginPulsado);
+        }else{
+            setMensaje("");
+        }  
+    }
+
+
+
     useEffect(() => {
+        console.log("Solicitando datos a la Base de Datos")
         const url = 'https://borras25server.vercel.app/';
         //const url = 'http://localhost:3306/';
 
         fetch(url)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Error al cargar datos de usuario en Login');
+                throw new Error('Error en la solicitud de datos para el Login');
             }
             return response.json();
         })
         .then(data => {setUsuarios(data)})
-        .catch(error => console.error('Error en la respuesta Login:', error));
+        .catch(error => console.error('Error en la solicitud fetch a la API, Login:', error));
 
     }, [btnLoginPulsado]);
 
     const ConectarUsuario = async (user)=>{
-        const datos = { id: user.id_usuario, conect: 1 };
-        setIdConectado(user.id_usuario);
+        const datos = { 
+            id: user.id_usuario, 
+            conect: 1 
+        };
+
+        setIdConectado(user.id_usuario); //Esto se usa despues para el Logout
     
         try {
             const response = await fetch('https://borras25server.vercel.app/actualizar_estado_conexion', {
@@ -44,37 +80,10 @@ const Login = (props)=>{
                 console.log("Error al actualizar el estado de conexion");
             }
         } catch (error) {
-            console.log(error);
+            console.log("Error en la solicitud fetch, Cambio Estado Conexion: ",error);
         }
     }
 
-    const manejoLogin = async (e) => {
-        let inp_usuario = document.querySelector("#inp_usuario").value;
-        let inp_passw = document.querySelector("#inp_passw").value;
-        let encontrado = false;
-
-        e.preventDefault();
-        setBtnLoginPulsado(!btnLoginPulsado);
-
-        for (const user of usuarios) {
-            if (user.usuario === inp_usuario && user.passw === inp_passw && user.conectado === 0) {
-                if (user.usuario === "admin") {
-                    manejoAdmin();
-                } else {
-                    manejoAlumno(user);
-                }
-                
-                await ConectarUsuario(user)
-                encontrado = true;
-                break;
-            }
-        }
-    
-        if (!encontrado) {
-            setMensaje("Usuario o Contraseña incorrecto.");
-        }
-    }
-    
 
     return <div className="contenedor_login">
         <NavBar clase ="nav_bar"/>
