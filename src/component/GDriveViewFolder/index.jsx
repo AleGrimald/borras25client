@@ -36,10 +36,10 @@ const GDriveViewFolder = () => {
     useEffect(() => {
         function start() {
             gapi.client.init({
-                apiKey: 'AIzaSyA9Vrs2QzrIuemwqIfYpheiIsMPtgSqcE4',
+                apiKey: 'AIzaSyBKWKtuKgRAbLbDvTwgo4T4yNMECqFUa_4',
                 clientId: '202413920451-5p4c1h28vgq75554qnppflmh3kspsarr.apps.googleusercontent.com',
                 discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-                scope: 'https://www.googleapis.com/auth/drive.readonly',
+                scope: 'https://www.googleapis.com/auth/drive',
             }).then(() => {
                 gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
                 updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -142,7 +142,7 @@ const GDriveViewFolder = () => {
     return (
         <div className='contenedor_gdrive'>
             <h2 className='gdrive_h2'>Rutinas en Google Drive</h2>
-            
+            <button onClick={()=>{updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get())}}>asdasdas</button>
             {
                 folderStack.length > 0 && <button onClick={manejoRetroceder} className='btn-accion'>Volver</button>
             }

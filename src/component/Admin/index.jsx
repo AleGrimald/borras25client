@@ -7,8 +7,6 @@ import FormulatioAlumno from '../FormularioAlumno';
 import FormulatioEditarA from '../FormularioEditarA';
 import ListaAlumnos from '../ListaAlumnos';
 import PanelIzqAdmin from '../PanelIzqAdmin'
-//import GDriveView from '../GDriveView'
-import GDriveUpload from '../GDrivepload';
 import GDriveViewFolder from '../GDriveViewFolder';
 
 const Admin =(props)=>{
@@ -118,7 +116,7 @@ const Admin =(props)=>{
             btnNombre: "Rutinas",
             condicion: btnRutina,
             funciones: [manejoListadoR, manejoAgregarR],
-            contenido: ["Listar Rutina", "Agregar Rutina"],
+            contenido: ["Listar Rutina"],
             clases: ["izq_boton", "opciones_lista", "lista_admin", "lista_admin_elemento"]
         },
     ];
@@ -204,13 +202,9 @@ const Admin =(props)=>{
                 }
 
                 {
-                    //manejoListarRutina?<GDriveView usuario={usuario}/>:<></>
                     manejoListarRutina?<GDriveViewFolder/>:<></>
                 }
 
-                {
-                    manejoAgregarRutina?<GDriveUpload/>:<></>
-                }
             </article>
 
             <aside className='main_panel_alumno'>
