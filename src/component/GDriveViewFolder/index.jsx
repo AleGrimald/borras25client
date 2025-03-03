@@ -120,6 +120,25 @@ const GDriveViewFolder = () => {
         };
     };
 
+    const meses = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    ];
+    const numerosMeses = [
+        "01", "02", "03", "04", "05", "06", 
+        "07", "08", "09", "10", "11", "12"
+    ];
+
     return (
         <div className='contenedor_gdrive'>
             <h2 className='gdrive_h2'>Rutinas en Google Drive</h2>
@@ -136,18 +155,18 @@ const GDriveViewFolder = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {files.length > 0 ? files.map(file => (
+                    {files.length > 0 ? files.map((file,index) => (
                         <tr key={file.id}>
-                            <td>{file.name}</td>
+                            <td>{file.name===numerosMeses[index]?file.name+' - '+meses[index]: file.name}</td>
                             <td>
-                                {file.mimeType === 'application/vnd.google-apps.folder' ? (
-                                    <button onClick={() => manejoClickCarpeta(file.id)} className='btn-accion'>Abrir</button>
-                                ) : (
-                                    <div style={{ display:'flex', justifyContent:'space-around'}}>
+                                {
+                                    file.mimeType === 'application/vnd.google-apps.folder'
+                                    ?<button onClick={() => manejoClickCarpeta(file.id)} className='btn-accion'>Abrir</button>
+                                    :<div style={{ display:'flex', justifyContent:'space-around'}}>
                                         <button onClick={() => {handleViewFile(file); setAlternarVisibildiadArchivo(!visibilidadArchivo)}} className='btn-accion'>Ver</button>
                                         <button style={{backgroundColor:'#E04B2E'}} onClick={() => handleViewFile(file)} className='btn-accion'>Borrar</button>
                                     </div>
-                                )}
+                                }
                             </td>
                         </tr>
                     )) : (
@@ -161,7 +180,7 @@ const GDriveViewFolder = () => {
             {
                 currentFolder !== 'root' &&
                 <div className='contenedor_upload'>
-                    <h2 className='upload_h2'>Subir PDF a la carpeta seleccionada</h2>
+                    <h2 className='upload_h2'>Asigna una rutina ⬇️</h2>
                     <input id='inp_file' type="file" className='input-file' onChange={handleFileChange} />
                     <button onClick={handleUploadFile} className='btn-subir'>Subir PDF</button>
                 </div>
@@ -170,7 +189,7 @@ const GDriveViewFolder = () => {
                 visibilidadArchivo?
                 selectedFile &&
                 <div className="visor-pdf">
-                    <h2>Visor de PDF</h2>
+                    <h2>Vista Previa</h2>
                     <iframe src={selectedFile} width="100%" height="500px" title="Visor de PDF" sandbox="allow-scripts allow-same-origin"></iframe>
                 </div>:<></>
             }
